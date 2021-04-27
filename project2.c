@@ -58,11 +58,12 @@ int main(int argc, char *argv[])
 	}
 
 	//begin process
-	
+	char process[32];
+	char memorySize[32];
+
 	if (*v == 'B')
 	for (int i = 0; i < count; i++)
 	{
-		printf("hello\n");
 		if (pretemp[i] == '#')
 		{
 			//printf("ignore\n");
@@ -82,11 +83,69 @@ int main(int argc, char *argv[])
 		}
 		else if (pretemp[i] == 'R' && pretemp[i+1] == 'E' && pretemp[i+2] == 'Q')
 		{
+			printf("REQUEST ");
 			//know command will be REQUEST
+			i = i + 8;
+			//allocate process name into process array
+			for (int k = 0; k < 32; k++)
+			{
+				if (pretemp[i] != ' ')
+				{
+					process[k] = pretemp[i];
+					i++;
+				}
+				else
+				{
+					//reached end of process name
+					break;
+				}
+			}
+			for (int h = 0; h < 32; h++)
+			{
+				printf("%c", process[h]);
+			}
+			printf(" ");
+			
+			//allocate memory into memorysize array
+			for (int k = 0; k < 32; k++)
+			{
+				if (pretemp[i] != '\n')
+				{
+					memorySize[k] = pretemp[i];
+					i++;
+				}
+				else 
+				{
+					printf("this should happen\n");
+					//reached end of memory size
+					break;
+				}
+			}
+			for (int h = 0; h < 32; h++)
+			{
+				printf("%c", memorySize[h]);
+			}
+			printf("\n");
+
 		}
 		else if (pretemp[i] == 'R' && pretemp[i+1] == 'E' && pretemp[i+2] == 'L')
 		{
 			//know command will be RELEASE
+		}
+		else if (pretemp[i] == 'L')
+		{
+			if (pretemp[i+5] == 'A' && pretemp[i+6] == 'S')
+			{
+				//LIST ASSIGNED
+			}
+			else if (pretemp[i+5] == 'A' && pretemp[i+6] == 'V')
+			{
+				//LIST AVAILABLE
+			}
+		}
+		else if (pretemp[i] == 'F')
+		{
+			//FIND
 		}
 	}
 
