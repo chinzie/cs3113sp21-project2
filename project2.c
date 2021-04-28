@@ -12,6 +12,8 @@ struct ACTION
 	char s[32];
 
 	int amount;
+
+	int address;
 };
 
 int main(int argc, char *argv[])
@@ -157,12 +159,12 @@ int main(int argc, char *argv[])
 				strncat(arr[index].s, &process[i], 1);
 			}
 			arr[index].amount = c;
-			//arr[index].s = str;
 			holder = holder - c;
 			printf("ALLOCATED ");
 			printf("%s", arr[index].s);
 			printf(" ");
-			printf("%d", c + memTemp);
+			printf("%d", memTemp);
+			arr[index].address = memTemp;
 			memTemp = c + memTemp;
 			printf("\n");
 			temp = 0;//reset
@@ -181,6 +183,7 @@ int main(int argc, char *argv[])
                                 {
                                         process[k] = pretemp[i];
                                         i++;
+					temp++;
                                 }
                                 else
                                 {
@@ -188,12 +191,35 @@ int main(int argc, char *argv[])
                                         break;
                                 }
                         }
-			for (int h = 0; h < sizeof(process); h++)
-                        {
-                                //printf("%c", process[h]);
-                        }
+			char str[32];
+			for (int i = 0; i < temp; i++)
+			{
+				strncat(str, &process[i], 1);
+			}
+			
 
-                        //printf("\n");
+			int memHolder;
+			int indexHolder;
+			for (int i = 0; i < index; i++)
+			{
+
+				if (strcmp(str, arr[i].s) == 0)
+				{
+					//printf("found");
+					memHolder = arr[i].amount;
+					indexHolder = i;
+					break;
+				}
+			}
+
+			printf("FREE ");
+			printf("%s ", arr[indexHolder].s);
+			printf("%d ", memHolder);
+			printf("%d ", arr[indexHolder].address);
+			printf("\n");
+			str[0] = '\0';
+			arr[indexHolder].s[0] = '\0';
+
 		}
 		else if (pretemp[i] == 'L')
 		{
