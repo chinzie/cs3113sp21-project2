@@ -130,16 +130,12 @@ int main(int argc, char *argv[])
 				}
 			}
 			
-			for (int h = 0; h < sizeof(process); h++)
-			{
-				//printf("%c", process[h]);
-			}
-			//printf(" ");
 			
+			i = i + 1;
 			//allocate memory into memorysize array
 			for (int k = 0; k < 32; k++)
 			{
-				if (pretemp[i] != '\n')
+				if (pretemp[i] != '\n' && pretemp[i] != ' ')
 				{
 					memorySize[k] = pretemp[i];
 					i++;
@@ -152,24 +148,77 @@ int main(int argc, char *argv[])
 			}
 			
 			int c = atoi(memorySize);//append all chars to an int
+			for (int i = 0; i < 32; i++)//reset memsize array for future use
+			{
+				memorySize[i] = '\0';
+			}
 			
-			//char str[32];
+
+
+			
 			for (int i = 0; i < temp; i++)
 			{
 				strncat(arr[index].s, &process[i], 1);
 			}
 			arr[index].amount = c;
 			holder = holder - c;
+			arr[index].address = memTemp;
 			printf("ALLOCATED ");
 			printf("%s", arr[index].s);
 			printf(" ");
-			printf("%d", memTemp);
-			arr[index].address = memTemp;
-			memTemp = c + memTemp;
+			
+
+			int hold = 0;
+			int difference = 0;
+			int address = memTemp;
+			for (int i = 0; i < index; i++)
+			{
+				if (arr[i].s[0] == '@')
+				{
+					//found a gap
+					printf("%d >= %d\n", arr[i].amount, arr[index].amount);
+					if (arr[i].amount >= arr[index].amount)//gap is big enough to hold
+					{
+						difference = arr[i].amount - arr[index].amount;
+						if (hold == 0)
+						{
+							hold = difference;
+							address = arr[i].address;
+							if (i + 1 >= index)
+							{
+								break;
+							}
+						}
+						else if (difference < hold)
+						{	
+							address = difference;
+							address = arr[i].address;
+							if (i + 1 >= index)
+							{
+								for (int j = 0; j < temp; j++)
+								{
+									strncat(arr[i].s, &process[j], 1);
+								}
+								arr[i].amount = c;
+								//arr[index].amount = '\0';
+								break;
+							}
+						}
+					}
+				}
+			}
+
+
+
+			
+			printf("%d", address);
+			//arr[index].address = memTemp;
+			memTemp = c + address;
 			printf("\n");
 			temp = 0;//reset
 			//str[0] = '\0';//reset
 			index++;
+			
 		}
 		else if (pretemp[i] == 'R' && pretemp[i+1] == 'E' && pretemp[i+2] == 'L')
 		{
@@ -218,7 +267,7 @@ int main(int argc, char *argv[])
 			printf("%d ", arr[indexHolder].address);
 			printf("\n");
 			str[0] = '\0';
-			arr[indexHolder].s[0] = '\0';
+			arr[indexHolder].s[0] = '@';
 
 		}
 		else if (pretemp[i] == 'L')
