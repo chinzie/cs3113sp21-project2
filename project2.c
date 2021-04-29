@@ -87,6 +87,7 @@ int main(int argc, char *argv[])
 	struct ACTION arr[10000];
 	int index = 0;
 
+	int hold = 0;
 
 	if (*v == 'B')
 	for (int i = 0; i < count; i++)
@@ -168,9 +169,10 @@ int main(int argc, char *argv[])
 			printf(" ");
 			
 
-			int hold = 0;
+			//int hold = 0;
 			int difference = 0;
 			int address = memTemp;
+			int indexer = 0;
 			for (int i = 0; i < index; i++)
 			{
 				if (arr[i].s[0] == '@')
@@ -180,31 +182,23 @@ int main(int argc, char *argv[])
 					if (arr[i].amount >= arr[index].amount)//gap is big enough to hold
 					{
 						difference = arr[i].amount - arr[index].amount;
-						if (hold == 0)
+						if (hold == 0 && arr[i].s[0] == '@')
 						{
 							hold = difference;
 							address = arr[i].address;
-							if (i + 1 >= index)
-							{
-								break;
-							}
+							indexer = i;
 						}
-						else if (difference < hold)
+						else if (difference < hold && arr[i].s[0] == '@')
 						{	
 							address = difference;
 							address = arr[i].address;
-							if (i + 1 >= index)
-							{
-								for (int j = 0; j < temp; j++)
-								{
-									strncat(arr[i].s, &process[j], 1);
-								}
-								arr[i].amount = c;
-								//arr[index].amount = '\0';
-								break;
-							}
+							indexer = i;
 						}
 					}
+				}
+				if (i + 1 >= index)
+				{
+					arr[indexer].s[0] = '%';
 				}
 			}
 
