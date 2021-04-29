@@ -14,6 +14,8 @@ struct ACTION
 	int amount;
 
 	int address;
+
+	int gap;
 };
 
 int main(int argc, char *argv[])
@@ -153,9 +155,79 @@ int main(int argc, char *argv[])
 			{
 				memorySize[i] = '\0';
 			}
+
+			/*
+			char str[32];
+                        for (int i = 0; i < temp; i++)
+                        {
+                                strncat(str, &process[i], 1);
+                        }
+			*/
 			
+			//stuff is stored temporarily
+			//find out if space for best fit
+			for (int i = 0; i <= index; i++)
+			{
+				if (index == 0)//first one
+				{
+					for (int i = 0; i < temp; i++)
+                        		{
+                                		strncat(arr[index].s, &process[i], 1);
+                        		}
+					int address = memTemp;
+                        		arr[index].amount = c;
+                        		holder = holder - c;
+                        		arr[index].address = memTemp;
+                        		printf("ALLOCATED ");
+                        		printf("%s", arr[index].s);
+                        		printf(" ");
+					printf("%d", address);
+                        		//arr[index].address = memTemp;
+                        		memTemp = c + address;
+                        		printf("\n");
+                        		temp = 0;//reset
+                        		//str[0] = '\0';//reset
+					arr[index].gap = 0;
+                        		index++;
+					break;
+				}
+
+				if (arr[i].gap > 0)//if there is a gap then consider it for best fit
+				{
+					printf("gap found!\n");
+					break;
+
+				}
+				else if (arr[i+1].address == '\0')//if there is no gap but the next address is empty
+				{
+					printf("space found!\n");
+					for (int i = 0; i < temp; i++)
+                        		{
+                                		strncat(arr[index].s, &process[i], 1);
+                        		}
+					int address = memTemp;
+                        		arr[index].amount = c;
+                        		holder = holder - c;
+                        		arr[index].address = memTemp;
+                        		printf("ALLOCATED ");
+                        		printf("%s", arr[index].s);
+                        		printf(" ");
+					printf("%d", address);
+                        		//arr[index].address = memTemp;
+                        		memTemp = c + address;
+                        		printf("\n");
+                        		temp = 0;//reset
+                        		//str[0] = '\0';//reset
+					arr[index].gap = 0;
+                        		index++;
+					break;
+				}
+			}
 
 
+
+
+			/*
 			
 			for (int i = 0; i < temp; i++)
 			{
@@ -173,6 +245,8 @@ int main(int argc, char *argv[])
 			int difference = 0;
 			int address = memTemp;
 			int indexer = 0;
+
+			
 			for (int i = 0; i < index; i++)
 			{
 				if (arr[i].s[0] == '@')
@@ -201,6 +275,7 @@ int main(int argc, char *argv[])
 					arr[indexer].s[0] = '%';
 				}
 			}
+			
 
 
 
@@ -212,8 +287,13 @@ int main(int argc, char *argv[])
 			temp = 0;//reset
 			//str[0] = '\0';//reset
 			index++;
-			
+			*/
 		}
+
+
+
+
+
 		else if (pretemp[i] == 'R' && pretemp[i+1] == 'E' && pretemp[i+2] == 'L')
 		{
 			//printf("RELEASE ");
@@ -222,11 +302,11 @@ int main(int argc, char *argv[])
                         //allocate process name into process array
                         for (int k = 0; k < 32; k++)
                         {
-                                if (pretemp[i] != '\n')
+                                if (pretemp[i] != ' ' && pretemp[i] != '\n')
                                 {
                                         process[k] = pretemp[i];
                                         i++;
-					temp++;
+                                        temp++;
                                 }
                                 else
                                 {
@@ -234,36 +314,81 @@ int main(int argc, char *argv[])
                                         break;
                                 }
                         }
+
 			char str[32];
 			for (int i = 0; i < temp; i++)
 			{
 				strncat(str, &process[i], 1);
 			}
-			
 
-			int memHolder;
-			int indexHolder;
+			printf("string: %s\n", str);
+			//for (int i = 0; i < temp; i++)
+			//{
+			//	strncat(arr[index].s, &process[i], 1);
+			//}
+
+			int memHolder = 0;
+			int indexHolder = 0;
+			printf("index: %d\n", index);
 			for (int i = 0; i < index; i++)
 			{
-
 				if (strcmp(str, arr[i].s) == 0)
 				{
-					//printf("found");
+					printf("found!\n");
 					memHolder = arr[i].amount;
 					indexHolder = i;
+					printf("holder: %d\n", indexHolder);
 					break;
 				}
 			}
+			
+			//set gap
+
 
 			printf("FREE ");
 			printf("%s ", arr[indexHolder].s);
 			printf("%d ", memHolder);
 			printf("%d ", arr[indexHolder].address);
 			printf("\n");
-			str[0] = '\0';
-			arr[indexHolder].s[0] = '@';
 
+			arr[indexHolder].amount = 0;
+			arr[indexHolder].address = 0;
+			arr[indexHolder].gap = 0;
+			arr[indexHolder+1].gap = arr[indexHolder+1].address - arr[indexHolder-1].amount + arr[indexHolder-1].address;//set gap
+			printf("gap set: %d\n", arr[indexHolder+1].gap);
+			for (int i = 0; i < temp; i++)
+			{
+				str[i] = '\0';
+			}
+			
+			temp = 0;
 		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		else if (pretemp[i] == 'L')
 		{
 			if (pretemp[i+5] == 'A' && pretemp[i+6] == 'S')
