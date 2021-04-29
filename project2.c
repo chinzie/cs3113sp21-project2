@@ -16,6 +16,8 @@ struct ACTION
 	int address;
 
 	int gap;
+
+	int position;
 };
 
 int main(int argc, char *argv[])
@@ -155,17 +157,9 @@ int main(int argc, char *argv[])
 			{
 				memorySize[i] = '\0';
 			}
-
-			/*
-			char str[32];
-                        for (int i = 0; i < temp; i++)
-                        {
-                                strncat(str, &process[i], 1);
-                        }
-			*/
 			
 			//stuff is stored temporarily
-			//find out if space for best fit
+			//find out if space
 			for (int i = 0; i <= index; i++)
 			{
 				if (index == 0)//first one
@@ -192,15 +186,69 @@ int main(int argc, char *argv[])
 					break;
 				}
 
-				if (arr[i].gap > 0)//if there is a gap then consider it for best fit
+				//printf("gap at %d is %d\n", i, arr[i].gap);
+				if (arr[i].gap > 0 && arr[i+1].address != '\0')//if there is a gap then consider it for best fit
 				{
-					printf("gap found!\n");
-					break;
+					//printf("gap found!\n");
+					//find out if gap is big enough
+					if (arr[i].gap > c)
+					{
+						//find out if the hole it makes will be the smallest
+						int hole = arr[i].gap - c;
+						//printf("hole: %d = %d - %d\n", hole, arr[i].gap, c);
+						int newHole = 0;
+						int smallestHoleIndex = i;
+						for (int j = i+1; j < index; j++)
+						{
+							if (arr[j].gap > 0 && arr[j].gap > c)//gap exists and is big enough
+							{
+								newHole = arr[j].gap - c;
+								
+								if (newHole < hole)//smaller hole made
+								{
+									hole = newHole;//set hole equal to the smaller hole
+									smallestHoleIndex = j;//save index of gap for smallest hole
+								}
+							}
+						}
+						//by now we have the smallest hole and its index
+						//place the process in this gap theoretically
 
+						for (int i = 0; i < temp; i++)
+                                        	{
+                                                	strncat(arr[index].s, &process[i], 1);
+                                        	}
+
+						arr[index].amount = c;
+						arr[index].address = arr[smallestHoleIndex].address;
+						arr[index].gap = 0;
+
+						arr[smallestHoleIndex].gap = hole;
+						arr[smallestHoleIndex].address = arr[smallestHoleIndex - 1].amount + arr[smallestHoleIndex - 1].address;
+						printf("ALLOCATED ");
+                                        	printf("%s", arr[index].s);
+                                        	printf(" ");
+                                        	printf("%d", arr[smallestHoleIndex].address);
+                                        	//arr[index].address = memTemp;
+                                        	//memTemp = c + address;
+                                        	printf("\n");
+                                        	temp = 0;//reset
+                                        	//str[0] = '\0';//reset
+                                        	//arr[index].gap = 0;
+
+						//printf("new gap is: %d\n", arr[smallestHoleIndex].gap);
+						index++;
+						break;
+					}
+					else
+					{
+						continue;
+					}
 				}
 				else if (arr[i+1].address == '\0')//if there is no gap but the next address is empty
 				{
-					printf("space found!\n");
+					//printf("space found!\n");
+					//printf("gap at %d is %d\n", i, arr[i].gap);
 					for (int i = 0; i < temp; i++)
                         		{
                                 		strncat(arr[index].s, &process[i], 1);
@@ -223,75 +271,7 @@ int main(int argc, char *argv[])
 					break;
 				}
 			}
-
-
-
-
-			/*
-			
-			for (int i = 0; i < temp; i++)
-			{
-				strncat(arr[index].s, &process[i], 1);
-			}
-			arr[index].amount = c;
-			holder = holder - c;
-			arr[index].address = memTemp;
-			printf("ALLOCATED ");
-			printf("%s", arr[index].s);
-			printf(" ");
-			
-
-			//int hold = 0;
-			int difference = 0;
-			int address = memTemp;
-			int indexer = 0;
-
-			
-			for (int i = 0; i < index; i++)
-			{
-				if (arr[i].s[0] == '@')
-				{
-					//found a gap
-					printf("%d >= %d\n", arr[i].amount, arr[index].amount);
-					if (arr[i].amount >= arr[index].amount)//gap is big enough to hold
-					{
-						difference = arr[i].amount - arr[index].amount;
-						if (hold == 0 && arr[i].s[0] == '@')
-						{
-							hold = difference;
-							address = arr[i].address;
-							indexer = i;
-						}
-						else if (difference < hold && arr[i].s[0] == '@')
-						{	
-							address = difference;
-							address = arr[i].address;
-							indexer = i;
-						}
-					}
-				}
-				if (i + 1 >= index)
-				{
-					arr[indexer].s[0] = '%';
-				}
-			}
-			
-
-
-
-			
-			printf("%d", address);
-			//arr[index].address = memTemp;
-			memTemp = c + address;
-			printf("\n");
-			temp = 0;//reset
-			//str[0] = '\0';//reset
-			index++;
-			*/
 		}
-
-
-
 
 
 		else if (pretemp[i] == 'R' && pretemp[i+1] == 'E' && pretemp[i+2] == 'L')
@@ -321,7 +301,7 @@ int main(int argc, char *argv[])
 				strncat(str, &process[i], 1);
 			}
 
-			printf("string: %s\n", str);
+			//printf("string: %s\n", str);
 			//for (int i = 0; i < temp; i++)
 			//{
 			//	strncat(arr[index].s, &process[i], 1);
@@ -329,15 +309,15 @@ int main(int argc, char *argv[])
 
 			int memHolder = 0;
 			int indexHolder = 0;
-			printf("index: %d\n", index);
+			//printf("index: %d\n", index);
 			for (int i = 0; i < index; i++)
 			{
 				if (strcmp(str, arr[i].s) == 0)
 				{
-					printf("found!\n");
+					//printf("found!\n");
 					memHolder = arr[i].amount;
 					indexHolder = i;
-					printf("holder: %d\n", indexHolder);
+					//printf("holder: %d\n", indexHolder);
 					break;
 				}
 			}
@@ -352,10 +332,10 @@ int main(int argc, char *argv[])
 			printf("\n");
 
 			arr[indexHolder].amount = 0;
-			arr[indexHolder].address = 0;
-			arr[indexHolder].gap = 0;
-			arr[indexHolder+1].gap = arr[indexHolder+1].address - arr[indexHolder-1].amount + arr[indexHolder-1].address;//set gap
-			printf("gap set: %d\n", arr[indexHolder+1].gap);
+			//arr[indexHolder].address = 1;
+			//arr[indexHolder].gap = 0;
+			arr[indexHolder].gap = arr[indexHolder+1].address - (arr[indexHolder-1].amount + arr[indexHolder-1].address);//set gap
+			//printf("gap set: %d = %d - %d + %d\n", arr[indexHolder].gap, arr[indexHolder+1].address, arr[indexHolder-1].amount, arr[indexHolder-1].address);
 			for (int i = 0; i < temp; i++)
 			{
 				str[i] = '\0';
@@ -368,39 +348,30 @@ int main(int argc, char *argv[])
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		else if (pretemp[i] == 'L')
 		{
 			if (pretemp[i+5] == 'A' && pretemp[i+6] == 'S')
 			{
 				//LIST ASSIGNED
 				//printf("LIST ASSIGNED\n");
+				//
+				for (int e = 0; e <= index; e++)
+				{
+					if (arr[e].gap != 0)//skip it because its a gap
+					{
+						continue;
+					}
+					else
+					{
+
+
 			}
 			else if (pretemp[i+5] == 'A' && pretemp[i+6] == 'V')
 			{
 				//LIST AVAILABLE
 				//printf("LIST AVAILABLE\n");
-				printf("(%d, %d)\n", holder, memTemp);
+				//printf("(%d, %d)\n", holder, memTemp);
+
 			}
 		}
 		else if (pretemp[i] == 'F')
