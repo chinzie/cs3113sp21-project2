@@ -182,6 +182,7 @@ int main(int argc, char *argv[])
                         		temp = 0;//reset
                         		//str[0] = '\0';//reset
 					arr[index].gap = 0;
+					arr[index].position = index;
                         		index++;
 					break;
 				}
@@ -229,6 +230,7 @@ int main(int argc, char *argv[])
                                         	printf("%s", arr[index].s);
                                         	printf(" ");
                                         	printf("%d", arr[smallestHoleIndex].address);
+						arr[index].position = arr[smallestHoleIndex].position;
                                         	//arr[index].address = memTemp;
                                         	//memTemp = c + address;
                                         	printf("\n");
@@ -267,6 +269,7 @@ int main(int argc, char *argv[])
                         		temp = 0;//reset
                         		//str[0] = '\0';//reset
 					arr[index].gap = 0;
+					arr[index].position = index;
                         		index++;
 					break;
 				}
@@ -363,6 +366,7 @@ int main(int argc, char *argv[])
 					}
 					else
 					{
+
 
 
 			}
