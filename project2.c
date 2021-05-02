@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
 	int count = 0;
 
 	int holder;
+	int origin;
 	char *v;
 	unsigned char e;
 	if (argc > 1)
@@ -47,6 +48,7 @@ int main(int argc, char *argv[])
 		int mem = atoi(argv[2]);//assign memory
 
 		holder = mem;
+		origin = holder;
 		//printf("file input\n");
 		FILE *file_handle;
 		file_handle = fopen(argv[3], "r");
@@ -140,12 +142,6 @@ int main(int argc, char *argv[])
 					break;
 				}
 			}
-
-			char str[32];
-			for (int i = 0; i < temp; i++)
-                        {
-				strncat(str, &process[i], 1);
-                        }
 			
 			
 			i = i + 1;
@@ -165,11 +161,13 @@ int main(int argc, char *argv[])
 			}
 			
 			int c = atoi(memorySize);//append all chars to an int
-			if (c > holder)
+			/*
+			if (c > origin)
 			{
 				printf("FAIL REQUEST %s %d\n", str, c);
 				break;
 			}
+			*/
 			for (int i = 0; i < 32; i++)//reset memsize array for future use
 			{
 				memorySize[i] = '\0';
@@ -184,6 +182,11 @@ int main(int argc, char *argv[])
 					for (int i = 0; i < temp; i++)
                         		{
                                 		strncat(arr[index].s, &process[i], 1);
+                        		}
+					if (c > origin)
+                        		{
+                                		printf("FAIL REQUEST %s %d\n", arr[index].s, c);
+                                		break;
                         		}
 					int address = memTemp;
                         		arr[index].amount = c;
@@ -421,7 +424,7 @@ int main(int argc, char *argv[])
 					{
 						printf("(%d, %d) ", arr[u].gap, arr[u].gapLeft);
 					}
-					else if (u+1 >= index && index < 2)
+					else if (u+1 >= index)
 					{
 						printf("(%d, %d) ", holder, memTemp);
 						break;
