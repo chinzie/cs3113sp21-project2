@@ -404,6 +404,11 @@ int main(int argc, char *argv[])
 				i = i + 13;
 				for (int e = 0; e < index; e++)
 				{
+					if (index == 0)
+					{
+						printf("NONE\n");
+						break;
+					}
 					if (arr[e].gap != 0)//skip it because its a gap
 					{
 						continue;
@@ -428,8 +433,14 @@ int main(int argc, char *argv[])
 			else if (pretemp[i+5] == 'A' && pretemp[i+6] == 'V')
 			{
 				i = i + 14;
+
 				for (int u = 0; u < index; u++)
 				{
+					if (holder == origin)
+					{
+						printf("(%d, %d) ", origin, memTemp);
+						break;
+					}
 					if (arr[u].gap > 0 && index > 1)
 					{
 						printf("(%d, %d) ", arr[u].gap, arr[u].gapLeft);
@@ -437,6 +448,11 @@ int main(int argc, char *argv[])
 					else if (u+1 >= index)
 					{
 						printf("(%d, %d) ", holder, memTemp);
+						break;
+					}
+					else if (holder == 0)
+					{
+						printf("FULL");
 						break;
 					}
 				}
