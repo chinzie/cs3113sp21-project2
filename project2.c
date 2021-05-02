@@ -376,6 +376,10 @@ int main(int argc, char *argv[])
 			//arr[indexHolder].gap = 0;
 			arr[indexHolder].gap = arr[indexHolder+1].address - (arr[indexHolder-1].amount + arr[indexHolder-1].address);//set gap
 			arr[indexHolder].gap = arr[indexHolder].amount;
+			for (int k = 0; k < temp; k++)
+			{
+				arr[indexHolder].s[k] = '\0';
+			}
 			//printf("gap set: %d = %d - %d + %d\n", arr[indexHolder].gap, arr[indexHolder+1].address, arr[indexHolder-1].amount, arr[indexHolder-1].address);
 			for (int i = 0; i < temp; i++)
 			{
@@ -444,6 +448,44 @@ int main(int argc, char *argv[])
 		else if (pretemp[i] == 'F')
 		{
 			//FIND
+			i = i + 5;
+                        //allocate process name into process array
+                        for (int k = 0; k < 32; k++)
+                        {
+                                if (pretemp[i] != ' ' && pretemp[i] != '\n')
+                                {
+                                        process[k] = pretemp[i];
+                                        i++;
+                                        temp++;
+                                }
+                                else
+                                {
+                                        //reached end of process name
+                                        break;
+                                }
+                        }
+
+                        char q[32];
+                        for (int i = 0; i < temp; i++)
+                        {
+                                strncat(q, &process[i], 1);
+                        }
+
+			for (int k = 0; k < index; k++)
+			{
+				if (strcmp(arr[k].s, q) == 0)
+				{
+					printf("(%s, %d, %d)\n", arr[k].s, arr[k].amount, arr[k].address);
+					break;
+				}
+				else if (k+1 == temp)
+				{
+					printf("FAULT\n");
+					break;
+				}
+			}
+
+
 		}
 	}
 
