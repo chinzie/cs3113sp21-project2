@@ -466,7 +466,7 @@ int main(int argc, char *argv[])
                         }
 
                         char q[32];
-                        for (int i = 0; i < temp; i++)
+                        for (int i = 0; i < 32; i++)
                         {
                                 strncat(q, &process[i], 1);
                         }
@@ -478,14 +478,16 @@ int main(int argc, char *argv[])
 					printf("(%s, %d, %d)\n", arr[k].s, arr[k].amount, arr[k].address);
 					break;
 				}
-				else if (k+1 == temp)
+				else if (k+1 > index)
 				{
 					printf("FAULT\n");
 					break;
 				}
 			}
-
-
+			for (int i = 0; i < 32; i++)
+			{
+				q[i] = '\0';
+			}
 		}
 	}
 
