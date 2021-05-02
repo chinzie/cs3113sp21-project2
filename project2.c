@@ -380,11 +380,39 @@ int main(int argc, char *argv[])
                         	{
                                 	str[i] = '\0';
                         	}
-				break;
+				temp = 0;
+			}
+			else if (breaker == 0)
+			{
+				 //set gap
+                        	printf("FREE ");
+                        	printf("%s ", arr[indexHolder].s);
+                        	printf("%d ", memHolder);
+                        	printf("%d ", arr[indexHolder].address);
+                        	printf("\n");
+
+                        	//arr[indexHolder].amount = 0;
+                        	//arr[indexHolder].address = 1000000;
+                        	//arr[indexHolder].gap = 0;
+                        	arr[indexHolder].gap = arr[indexHolder+1].address - (arr[indexHolder-1].amount + arr[indexHolder-1].address);//set gap
+                        	arr[indexHolder].gap = arr[indexHolder].amount;
+                        	for (int k = 0; k < temp; k++)
+                        	{
+                                	arr[indexHolder].s[k] = '\0';
+                        	}
+                        	//printf("gap set: %d = %d - %d + %d\n", arr[indexHolder].gap, arr[indexHolder+1].address, arr[indexHolder-1].amount, arr[indexHolder-1].address);
+                        	for (int i = 0; i < temp; i++)
+                        	{	
+                                	str[i] = '\0';
+                        	}
+
+                        	temp = 0;
+
 			}
 			//set gap
 
 
+			/*
 			printf("FREE ");
 			printf("%s ", arr[indexHolder].s);
 			printf("%d ", memHolder);
@@ -407,6 +435,7 @@ int main(int argc, char *argv[])
 			}
 			
 			temp = 0;
+			*/
 		}
 
 
