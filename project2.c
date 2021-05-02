@@ -90,6 +90,7 @@ int main(int argc, char *argv[])
 	int memTemp = 0;
 
 	int temp = 0;
+	
 
 
 	struct ACTION arr[10000];
@@ -119,6 +120,7 @@ int main(int argc, char *argv[])
 		}
 		else if (pretemp[i] == 'R' && pretemp[i+1] == 'E' && pretemp[i+2] == 'Q')
 		{
+			
 			//printf("REQUEST ");
 			//know command will be REQUEST
 			i = i + 8;
@@ -138,6 +140,12 @@ int main(int argc, char *argv[])
 					break;
 				}
 			}
+
+			char str[32];
+			for (int i = 0; i < temp; i++)
+                        {
+				strncat(str, &process[i], 1);
+                        }
 			
 			
 			i = i + 1;
@@ -157,6 +165,11 @@ int main(int argc, char *argv[])
 			}
 			
 			int c = atoi(memorySize);//append all chars to an int
+			if (c > holder)
+			{
+				printf("FAIL REQUEST %s %d\n", str, c);
+				break;
+			}
 			for (int i = 0; i < 32; i++)//reset memsize array for future use
 			{
 				memorySize[i] = '\0';
@@ -408,9 +421,10 @@ int main(int argc, char *argv[])
 					{
 						printf("(%d, %d) ", arr[u].gap, arr[u].gapLeft);
 					}
-					else if (u+1 >= index)
+					else if (u+1 >= index && index < 2)
 					{
 						printf("(%d, %d) ", holder, memTemp);
+						break;
 					}
 				}
 				printf("\n");
