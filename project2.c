@@ -420,7 +420,7 @@ int main(int argc, char *argv[])
 			{
 				for (int u = 0; u < index; u++)
 				{
-					if (arr[u].gap > 0)
+					if (arr[u].gap > 0 && index > 1)
 					{
 						printf("(%d, %d) ", arr[u].gap, arr[u].gapLeft);
 					}
