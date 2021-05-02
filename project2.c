@@ -15,7 +15,11 @@ struct ACTION
 
 	int address;
 
+	int addressHolder;
+
 	int gap;
+
+	int gapLeft;
 
 	int position;
 };
@@ -172,6 +176,7 @@ int main(int argc, char *argv[])
                         		arr[index].amount = c;
                         		holder = holder - c;
                         		arr[index].address = memTemp;
+					arr[index].addressHolder = memTemp;
                         		printf("ALLOCATED ");
                         		printf("%s", arr[index].s);
                         		printf(" ");
@@ -220,17 +225,27 @@ int main(int argc, char *argv[])
                                                 	strncat(arr[index].s, &process[i], 1);
                                         	}
 
+						//arr[index].amount = c;
+						//printf("%d\n", arr[smallestHoleIndex].amount);
+						arr[index].address = c;
 						arr[index].amount = c;
-						arr[index].address = arr[smallestHoleIndex].address;
 						arr[index].gap = 0;
+						//printf("%d\n", arr[smallestHoleIndex].address);
+						int gapHolder = arr[smallestHoleIndex].address + arr[index].amount;
 
+						//printf("Index: %d\n", smallestHoleIndex);
+						int addressHold = arr[smallestHoleIndex].address;
+						arr[index].addressHolder = addressHold;
+						//printf("%d\n", addressHold);
+						//printf("%d\n", arr[smallestHoleIndex].addressHolder);
 						arr[smallestHoleIndex].gap = hole;
-						arr[smallestHoleIndex].address = arr[smallestHoleIndex - 1].amount + arr[smallestHoleIndex - 1].address;
+						//arr[smallestHoleIndex].address = arr[smallestHoleIndex - 1].amount + arr[smallestHoleIndex - 1].address;
 						printf("ALLOCATED ");
                                         	printf("%s", arr[index].s);
                                         	printf(" ");
-                                        	printf("%d", arr[smallestHoleIndex].address);
+                                        	printf("%d", arr[smallestHoleIndex].addressHolder);
 						arr[index].position = arr[smallestHoleIndex].position;
+						arr[smallestHoleIndex].position = 11000;
                                         	//arr[index].address = memTemp;
                                         	//memTemp = c + address;
                                         	printf("\n");
@@ -239,6 +254,8 @@ int main(int argc, char *argv[])
                                         	//arr[index].gap = 0;
 
 						//printf("new gap is: %d\n", arr[smallestHoleIndex].gap);
+						arr[smallestHoleIndex].gapLeft = gapHolder;
+						//arr[smallestHoleIndex].address = 100;
 						index++;
 						break;
 					}
@@ -259,6 +276,7 @@ int main(int argc, char *argv[])
                         		arr[index].amount = c;
                         		holder = holder - c;
                         		arr[index].address = memTemp;
+					arr[index].addressHolder = memTemp;
                         		printf("ALLOCATED ");
                         		printf("%s", arr[index].s);
                         		printf(" ");
@@ -334,8 +352,8 @@ int main(int argc, char *argv[])
 			printf("%d ", arr[indexHolder].address);
 			printf("\n");
 
-			arr[indexHolder].amount = 0;
-			//arr[indexHolder].address = 1;
+			//arr[indexHolder].amount = 0;
+			//arr[indexHolder].address = 1000000;
 			//arr[indexHolder].gap = 0;
 			arr[indexHolder].gap = arr[indexHolder+1].address - (arr[indexHolder-1].amount + arr[indexHolder-1].address);//set gap
 			//printf("gap set: %d = %d - %d + %d\n", arr[indexHolder].gap, arr[indexHolder+1].address, arr[indexHolder-1].amount, arr[indexHolder-1].address);
@@ -355,10 +373,11 @@ int main(int argc, char *argv[])
 		{
 			if (pretemp[i+5] == 'A' && pretemp[i+6] == 'S')
 			{
+				int tempPos = 0;
 				//LIST ASSIGNED
 				//printf("LIST ASSIGNED\n");
 				//
-				for (int e = 0; e <= index; e++)
+				for (int e = 0; e < index; e++)
 				{
 					if (arr[e].gap != 0)//skip it because its a gap
 					{
@@ -366,12 +385,35 @@ int main(int argc, char *argv[])
 					}
 					else
 					{
-
-
+						for (int r = 0; r < index; r++)
+						{
+							if (arr[r].position == tempPos)
+							{
+								printf("(%s, %d, %d) ", arr[r].s, arr[r].amount, arr[r].addressHolder);
+								tempPos++;
+								break;
+							}
+						}
+					
+					}
+				}
+				printf("\n");
 
 			}
 			else if (pretemp[i+5] == 'A' && pretemp[i+6] == 'V')
 			{
+				for (int u = 0; u < index; u++)
+				{
+					if (arr[u].gap > 0)
+					{
+						printf("(%d, %d) ", arr[u].gap, arr[u].gapLeft);
+					}
+					else if (u+1 >= index)
+					{
+						printf("(%d, %d) ", holder, memTemp);
+					}
+				}
+				printf("\n");
 				//LIST AVAILABLE
 				//printf("LIST AVAILABLE\n");
 				//printf("(%d, %d)\n", holder, memTemp);
