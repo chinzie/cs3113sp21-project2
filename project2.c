@@ -129,7 +129,6 @@ int main(int argc, char *argv[])
 			//allocate process name into process array
 			for (int k = 0; k < 32; k++)
 			{
-				
 				if (pretemp[i] != ' ')
 				{		
 					process[k] = pretemp[i];
@@ -208,21 +207,21 @@ int main(int argc, char *argv[])
 					break;
 				}
 
-				//printf("gap at %d is %d\n", i, arr[i].gap);
+				printf("gap at %d is %d\n", i, arr[i].gap);
 				if (arr[i].gap > 0 && arr[i+1].address != '\0')//if there is a gap then consider it for best fit
 				{
-					//printf("gap found!\n");
+					printf("gap found!\n");
 					//find out if gap is big enough
-					if (arr[i].gap > c)
+					if (arr[i].gap >= c)
 					{
 						//find out if the hole it makes will be the smallest
 						int hole = arr[i].gap - c;
-						//printf("hole: %d = %d - %d\n", hole, arr[i].gap, c);
+						printf("hole: %d = %d - %d\n", hole, arr[i].gap, c);
 						int newHole = 0;
 						int smallestHoleIndex = i;
 						for (int j = i+1; j < index; j++)
 						{
-							if (arr[j].gap > 0 && arr[j].gap > c)//gap exists and is big enough
+							if (arr[j].gap > 0 && arr[j].gap >= c)//gap exists and is big enough
 							{
 								newHole = arr[j].gap - c;
 								
@@ -230,6 +229,10 @@ int main(int argc, char *argv[])
 								{
 									hole = newHole;//set hole equal to the smaller hole
 									smallestHoleIndex = j;//save index of gap for smallest hole
+								}
+								else if (newHole == hole)
+								{
+									hole = hole;
 								}
 							}
 						}
@@ -372,6 +375,7 @@ int main(int argc, char *argv[])
 			//arr[indexHolder].address = 1000000;
 			//arr[indexHolder].gap = 0;
 			arr[indexHolder].gap = arr[indexHolder+1].address - (arr[indexHolder-1].amount + arr[indexHolder-1].address);//set gap
+			arr[indexHolder].gap = arr[indexHolder].amount - arr[indexHolder].address;
 			//printf("gap set: %d = %d - %d + %d\n", arr[indexHolder].gap, arr[indexHolder+1].address, arr[indexHolder-1].amount, arr[indexHolder-1].address);
 			for (int i = 0; i < temp; i++)
 			{
