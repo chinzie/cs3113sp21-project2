@@ -185,6 +185,11 @@ int main(int argc, char *argv[])
 					if (c > origin)
                         		{
                                 		printf("FAIL REQUEST %s %d\n", arr[index].s, c);
+						for (int k = 0; k < 32; k++)
+						{
+							arr[index].s[k] = '\0';
+						}
+
                                 		break;
                         		}
 					int address = memTemp;
@@ -349,8 +354,9 @@ int main(int argc, char *argv[])
 
 			int memHolder = 0;
 			int indexHolder = 0;
+			int breaker = 0;
 			//printf("index: %d\n", index);
-			for (int i = 0; i < index; i++)
+			for (int i = 0; i <= index; i++)
 			{
 				if (strcmp(str, arr[i].s) == 0)
 				{
@@ -360,8 +366,22 @@ int main(int argc, char *argv[])
 					//printf("holder: %d\n", indexHolder);
 					break;
 				}
+				else if (i + 1 > index)
+				{
+					//cant be found
+					printf("FAIL RELEASE %s\n", str);
+					breaker = 1;
+					break;
+				}
 			}
-			
+			if (breaker == 1)
+			{
+				for (int i = 0; i < temp; i++)
+                        	{
+                                	str[i] = '\0';
+                        	}
+				break;
+			}
 			//set gap
 
 
@@ -402,11 +422,11 @@ int main(int argc, char *argv[])
 				//printf("LIST ASSIGNED\n");
 				//
 				i = i + 13;
-				for (int e = 0; e < index; e++)
+				for (int e = 0; e <= index; e++)
 				{
 					if (index == 0)
 					{
-						printf("NONE\n");
+						printf("NONE");
 						break;
 					}
 					if (arr[e].gap != 0)//skip it because its a gap
@@ -433,8 +453,9 @@ int main(int argc, char *argv[])
 			else if (pretemp[i+5] == 'A' && pretemp[i+6] == 'V')
 			{
 				i = i + 14;
+				//printf("%d, %d\n", holder, origin);
 
-				for (int u = 0; u < index; u++)
+				for (int u = 0; u <= index; u++)
 				{
 					if (holder == origin)
 					{
