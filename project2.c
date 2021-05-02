@@ -288,9 +288,10 @@ int main(int argc, char *argv[])
 						continue;
 					}
 				}
-				else if (arr[i+1].address == '\0' && holder - c >= 0)//if there is no gap but the next address is empty
+				else if (holder - c >= 0)//if there is no gap but the next address is empty
 				{
-					printf("space found!\n");
+					//arr[i+1].address == '\0' && 
+					//printf("space found!\n");
 					//printf("gap at %d is %d\n", i, arr[i].gap);
 					for (int i = 0; i < temp; i++)
                         		{
@@ -317,6 +318,7 @@ int main(int argc, char *argv[])
 				}
 				else
 				{
+					//printf("%d\n", holder - c);
 					for (int i = 0; i < temp; i++)
                                         {
                                                 strncat(arr[index].s, &process[i], 1);
