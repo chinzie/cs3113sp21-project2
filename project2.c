@@ -401,6 +401,7 @@ int main(int argc, char *argv[])
 				//LIST ASSIGNED
 				//printf("LIST ASSIGNED\n");
 				//
+				i = i + 13;
 				for (int e = 0; e < index; e++)
 				{
 					if (arr[e].gap != 0)//skip it because its a gap
@@ -426,6 +427,7 @@ int main(int argc, char *argv[])
 			}
 			else if (pretemp[i+5] == 'A' && pretemp[i+6] == 'V')
 			{
+				i = i + 14;
 				for (int u = 0; u < index; u++)
 				{
 					if (arr[u].gap > 0 && index > 1)
