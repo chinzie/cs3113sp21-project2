@@ -196,6 +196,7 @@ int main(int argc, char *argv[])
 					int address = memTemp;
                         		arr[index].amount = c;
                         		holder = holder - c;
+					printf("holder: %d\n", holder);
                         		arr[index].address = memTemp;
 					arr[index].addressHolder = memTemp;
                         		printf("ALLOCATED ");
@@ -303,6 +304,7 @@ int main(int argc, char *argv[])
 					int address = memTemp;
                         		arr[index].amount = c;
                         		holder = holder - c;
+					printf("holder2: %d\n", holder); 
                         		arr[index].address = memTemp;
 					arr[index].addressHolder = memTemp;
                         		printf("ALLOCATED ");
