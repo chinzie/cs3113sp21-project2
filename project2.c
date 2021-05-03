@@ -337,7 +337,7 @@ int main(int argc, char *argv[])
                                         }
 					break;
 				}
-				else if (holder == 0)
+				else if (holder == 0 || c > holder)
                                         {
                                                 for (int i = 0; i < temp; i++)
                                                 {
