@@ -216,6 +216,9 @@ int main(int argc, char *argv[])
 				}
 				
 
+				//printf("%d\n", c);
+				//printf("%d\n", holder);
+				
 
 				//printf("gap at %d is %d\n", i, arr[i].gap);
 				if (arr[i].gap > 0)// && arr[i+1].address != '\0')//if there is a gap then consider it for best fit
@@ -258,6 +261,8 @@ int main(int argc, char *argv[])
 						//printf("%d\n", arr[smallestHoleIndex].amount);
 						arr[index].address = c;
 						arr[index].amount = c;
+						if (smallestHoleIndex == index)
+							holder = holder - arr[index].amount;
 						arr[index].gap = 0;
 						//printf("%d\n", arr[smallestHoleIndex].address);
 						int gapHolder = arr[smallestHoleIndex].address + arr[index].amount;
@@ -337,8 +342,10 @@ int main(int argc, char *argv[])
                                         }
 					break;
 				}
-				else if (holder == 0 || c > holder)
+				else if (holder == 0 || (c > holder && i == index))
                                         {
+						//printf("here3\n");
+						//printf("%d\n", holder);
                                                 for (int i = 0; i < temp; i++)
                                                 {
                                                         strncat(arr[index].s, &process[i], 1);
