@@ -220,10 +220,17 @@ int main(int argc, char *argv[])
 				//printf("%d\n", holder);
 				
 
+				int gapChecker = 0;
 				//printf("gap at %d is %d\n", i, arr[i].gap);
 				if (arr[i].gap > 0)// && arr[i+1].address != '\0')//if there is a gap then consider it for best fit
 				{
 					//printf("gap found!\n");
+					if (i+1 == index && arr[i].gap < c)
+					{
+						//printf("no gap found\n");
+						gapChecker = 1;
+					}
+
 					//find out if gap is big enough
 					if (arr[i].gap >= c)
 					{
@@ -347,7 +354,7 @@ int main(int argc, char *argv[])
                                         }
 					break;
 				}
-				else if (holder == 0 || (c > holder && i == index))
+				else if ((holder == 0 && gapChecker ==1) || (c > holder && i == index))
                                         {
 						//printf("here3\n");
 						//printf("%d\n", holder);
