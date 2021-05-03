@@ -289,7 +289,7 @@ int main(int argc, char *argv[])
 						break;
 					}
 					
-					else
+					else if (c > holder)
 					{
 						for (int i = 0; i < temp; i++)
                                         	{
