@@ -512,6 +512,7 @@ int main(int argc, char *argv[])
 				i = i + 13;
 				for (int e = 0; e <= index; e++)
 				{
+					//printf("%d\n", arr[e].gap);
 					if (index == 0)
 					{
 						printf("NONE");
@@ -519,8 +520,13 @@ int main(int argc, char *argv[])
 					}
 					if (arr[e].gap != 0)//skip it because its a gap
 					{
+						if (arr[e].position == 1100)//unoccupied
+						{
+							tempPos++;
+						}
+						//printf("%d\n", arr[e].position);
 						//printf("skip");
-						tempPos++;
+						//tempPos++;
 						continue;
 					}
 					else
