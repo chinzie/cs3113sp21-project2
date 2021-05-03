@@ -219,6 +219,7 @@ int main(int argc, char *argv[])
 					//find out if gap is big enough
 					if (arr[i].gap >= c)
 					{
+
 						//find out if the hole it makes will be the smallest
 						int hole = arr[i].gap - c;
 						//printf("hole: %d = %d - %d\n", hole, arr[i].gap, c);
