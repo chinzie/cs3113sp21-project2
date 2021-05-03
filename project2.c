@@ -284,10 +284,12 @@ int main(int argc, char *argv[])
 						index++;
 						break;
 					}
+					/*
 					else
 					{
 						continue;
 					}
+					*/
 				}
 				else if (arr[i+1].address == '\0' && holder - c >= 0)//if there is no gap but the next address is empty
 				{
