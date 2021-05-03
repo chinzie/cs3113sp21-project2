@@ -100,7 +100,6 @@ int main(int argc, char *argv[])
 
 	int hold = 0;
 
-	printf("hello\n");
 	if (*v == 'B')
 	for (int i = 0; i < count; i++)
 	{
@@ -185,6 +184,7 @@ int main(int argc, char *argv[])
                         		}
 					if (c > origin)
                         		{
+						printf("here 1\n");
                                 		printf("FAIL REQUEST %s %d\n", arr[index].s, c);
 						for (int k = 0; k < 32; k++)
 						{
@@ -320,6 +320,7 @@ int main(int argc, char *argv[])
 				}
 				else if (holder - c < 0)
 				{
+					printf("here 2\n");
 					//printf("%d\n", holder - c);
 					for (int i = 0; i < temp; i++)
                                         {
