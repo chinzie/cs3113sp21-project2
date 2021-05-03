@@ -161,6 +161,7 @@ int main(int argc, char *argv[])
 			}
 			
 			int c = atoi(memorySize);//append all chars to an int
+			//printf("c is: %d\n", c);
 			/*
 			if (c > origin)
 			{
@@ -212,6 +213,7 @@ int main(int argc, char *argv[])
 					arr[index].gap = 0;
 					arr[index].position = index;
                         		index++;
+					printf("increment3\n");
 					break;
 				}
 				
@@ -231,6 +233,7 @@ int main(int argc, char *argv[])
 						gapChecker = 1;
 					}
 
+					//printf("%d\n", c);
 					//find out if gap is big enough
 					if (arr[i].gap >= c)
 					{
@@ -303,6 +306,7 @@ int main(int argc, char *argv[])
 						arr[smallestHoleIndex].gapLeft = gapHolder;
 						arr[smallestHoleIndex].addressHolder = arr[smallestHoleIndex].address + arr[index].amount;
 						index++;
+						//printf("increment\n");
 						break;
 					}
 					
@@ -333,8 +337,19 @@ int main(int argc, char *argv[])
                         		temp = 0;//reset
                         		//str[0] = '\0';//reset
 					arr[index].gap = 0;
-					arr[index].position = index;
+					//going on the top
+					int count = 0;
+					for (int j = 0; j <index; j++)
+					{
+						if (arr[j].position != 11000)
+						{
+							count++;
+						}
+					}
+
+					arr[index].position = count;
                         		index++;
+					//printf("increment2\n");
 					break;
 				}
 				else if (origin - c < 0)//not enough space
@@ -522,17 +537,22 @@ int main(int argc, char *argv[])
 					{
 						if (arr[e].position == 1100)//unoccupied
 						{
+							//printf("skipper\n");
 							tempPos++;
 						}
 						//printf("%d\n", arr[e].position);
-						//printf("skip");
+						//printf("skip\n");
 						//tempPos++;
 						continue;
 					}
 					else
 					{
-						for (int r = 0; r < index; r++)
+						for (int r = 0; r <= index; r++)
 						{
+							//printf("index: %d\n", r);
+							//printf("%d  %d\n", tempPos, arr[r].position);
+							//printf("(%s, %d, %d, %d)\n", arr[r].s, arr[r].amount, arr[r].addressHolder, arr[r].position);
+							//printf("%d\n", tempPos);
 							if (arr[r].position == tempPos && arr[r].gap == 0)
 							{
 								printf("(%s, %d, %d) ", arr[r].s, arr[r].amount, arr[r].addressHolder);
@@ -562,7 +582,7 @@ int main(int argc, char *argv[])
 					}
 					else if (arr[u].gap > 0 && index > 1)
 					{
-						printf("(%d, %d) ", arr[u].gap, arr[u].addressHolder);//.gapLeft);
+						printf("(%d, %d) ", arr[u].gap, arr[u].addressHolder);
 						noGap = 1;
 					}
 					else if (u+1 >= index && memTemp < origin)
