@@ -216,8 +216,8 @@ int main(int argc, char *argv[])
 				}
 				
 
-				printf("%d ", c);
-				printf("%d\n", holder);
+				//printf("%d ", c);
+				//printf("%d\n", holder);
 				
 
 				//printf("gap at %d is %d\n", i, arr[i].gap);
@@ -261,12 +261,17 @@ int main(int argc, char *argv[])
 						//printf("%d\n", arr[smallestHoleIndex].amount);
 						arr[index].address = c;
 						arr[index].amount = c;
-						if (smallestHoleIndex == index)
+						if (smallestHoleIndex == index - 1)
+						{
+							//printf("last ");
 							holder = holder - arr[index].amount;
+							//printf("%d\n", holder);
+						}
 						arr[index].gap = 0;
 						//printf("%d\n", arr[smallestHoleIndex].address);
 						int gapHolder = arr[smallestHoleIndex].address + arr[index].amount;
 
+						//printf("indexer: %d\n", index);
 						//printf("Index: %d\n", smallestHoleIndex);
 						int addressHold = arr[smallestHoleIndex].address;
 						arr[index].addressHolder = addressHold;
@@ -410,7 +415,7 @@ int main(int argc, char *argv[])
 					}
 					memHolder = arr[i].amount;
 					indexHolder = i;
-					//printf("holder: %d\n", indexHolder);
+					//printf("holder: %d\n", holder);
 					break;
 				}
 				else if (i + 1 > index)
