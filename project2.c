@@ -99,6 +99,7 @@ int main(int argc, char *argv[])
 	int index = 0;
 
 	int hold = 0;
+	printf("holder is: %d\n", holder);
 
 	if (*v == 'B')
 	for (int i = 0; i < count; i++)
