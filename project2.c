@@ -289,21 +289,6 @@ int main(int argc, char *argv[])
 						break;
 					}
 					
-					else if (c > holder)
-					{
-						for (int i = 0; i < temp; i++)
-                                        	{
-                                                	strncat(arr[index].s, &process[i], 1);
-                                        	}
-                                        	arr[index].amount = c;
-                                        	printf("FAIL REQUEST %s %d\n", arr[index].s, arr[index].amount);
-                                        	for (int k = 0; k < 32; k++)
-                                        	{
-                                                	arr[index].s[k] = '\0';
-                                        	}
-                                        	break;
-					}
-					
 				}
 				else if (arr[i+1].address == '\0' && holder - c >= 0)//if there is no gap but the next address is empty
 				{
@@ -352,6 +337,20 @@ int main(int argc, char *argv[])
                                         }
 					break;
 				}
+				else if (holder == 0)
+                                        {
+                                                for (int i = 0; i < temp; i++)
+                                                {
+                                                        strncat(arr[index].s, &process[i], 1);
+                                                }
+                                                arr[index].amount = c;
+                                                printf("FAIL REQUEST %s %d\n", arr[index].s, arr[index].amount);
+                                                for (int k = 0; k < 32; k++)
+                                                {
+                                                        arr[index].s[k] = '\0';
+                                                }
+                                                break;
+                                      	}
 			}
 		}
 
