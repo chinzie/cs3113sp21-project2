@@ -321,6 +321,7 @@ int main(int argc, char *argv[])
 				}
 				else if (holder - c < 0)//not enough space
 				{
+					printf("%d - %d = %d\n", holder, c, holder - c);
 					printf("here 2\n");
 					//printf("%d\n", holder - c);
 					for (int i = 0; i < temp; i++)
