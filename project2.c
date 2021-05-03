@@ -565,7 +565,7 @@ int main(int argc, char *argv[])
 
 			}
 		}
-		else if (pretemp[i] == 'F')
+		else if (pretemp[i] == 'F' && pretemp[i+1] == 'I')
 		{
 			//FIND
 			i = i + 5;
@@ -595,7 +595,7 @@ int main(int argc, char *argv[])
 			{
 				if (strcmp(arr[k].s, q) == 0)
 				{
-					printf("(%s, %d, %d)\n", arr[k].s, arr[k].amount, arr[k].address);
+					printf("(%s, %d, %d)\n", arr[k].s, arr[k].amount, arr[k].addressHolder);
 					break;
 				}
 				else if (k+1 > index)
