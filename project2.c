@@ -498,49 +498,82 @@ int main(int argc, char *argv[])
 				//printf("LIST ASSIGNED\n");
 				//
 				i = i + 13;
+
 				for (int e = 0; e <= index; e++)
 				{
-					//printf("%d\n", arr[e].gap);
+					//printf("e = %d\n", e);
 					if (index == 0)
 					{
 						printf("NONE");
 						break;
 					}
-					if (arr[e].gap != 0)//skip it because its a gap
+					if (arr[e].gap == 0)
+                                        {
+						//printf("hello\n");
+                                                for (int r = 0; r <= index; r++)
+                                                {
+                                                        //printf("index: %d\n", r);
+                                                        //printf("%d  %d\n", tempPos, arr[r].position);
+                                                        //printf("(%s, %d, %d, %d, %d)\n", arr[r].s, arr[r].amount, arr[r].addressHolder, arr[r].position, arr[r].changed);
+                                                        //printf("%d\n", tempPos);
+                                                        if (arr[r].position == tempPos && arr[r].gap == 0)
+                                                        {
+                                                                printf("(%s, %d, %d) ", arr[r].s, arr[r].amount, arr[r].addressHolder);
+                                                                tempPos++;
+                                                                //printf("temp: %d\n", tempPos);
+                                                                break;
+                                                        }
+                                                }
+
+                                        }
+					else if (arr[e].gap != 0)
 					{
+						//printf("looking: (%s, %d, %d, %d, %d, %d)\n", arr[e].s, arr[e].amount,
+                                                 //                               arr[e].addressHolder, arr[e].position, arr[e].changed, arr[e].gap);
+						//printf("hi\n");
 						if (arr[e].changed == 2)//unoccupied
 						{
+							//printf("heeeeee\n");
+							tempPos++;
+							continue;
+						}
+						else if (arr[e].changed == 1)
+						{
+							for (int r = 0; r <= index; r++)
+                                                	{
+                                                        	//printf("index: %d\n", r);
+                                                        	//printf("%d  %d\n", tempPos, arr[r].position);
+                                                        	//printf("(%s, %d, %d, %d, %d)\n", arr[r].s, arr[r].amount, arr[r].addressHolder, arr[r].position, arr[r].changed);
+                                                        	//printf("%d\n", tempPos);
+                                                        	if (arr[r].position == tempPos && arr[r].gap == 0)
+                                                        	{
+                                                                	printf("(%s, %d, %d) ", arr[r].s, arr[r].amount, arr[r].addressHolder);
+                                                                	tempPos++;
+                                                                	//printf("temp: %d\n", tempPos);
+                                                                	break;
+                                                        	}
+                                                	}
+
+						}
+						/*
 							if (arr[e].position == 11000)
 							{
+								printf("here\n");
 								continue;
 							}
-							else
+							else if (arr[e].changed == 1)
 							{
-								//printf("skipper\n");
+								printf("skipped: (%s, %d, %d, %d, %d)\n", arr[e].s, arr[e].amount, 
+										arr[e].addressHolder, arr[e].position, arr[e].changed);
+								printf("skipper\n");
 								tempPos++;
 							}
-						}
+							*/
+						
 						//printf("%d\n", arr[e].position);
 						//printf("skip\n");
 						//tempPos++;
 						continue;
-					}
-					else
-					{
-						for (int r = 0; r <= index; r++)
-						{
-							//printf("index: %d\n", r);
-							//printf("%d  %d\n", tempPos, arr[r].position);
-							//printf("(%s, %d, %d, %d, %d)\n", arr[r].s, arr[r].amount, arr[r].addressHolder, arr[r].position, arr[r].changed);
-							//printf("%d\n", tempPos);
-							if (arr[r].position == tempPos && arr[r].gap == 0)
-							{
-								printf("(%s, %d, %d) ", arr[r].s, arr[r].amount, arr[r].addressHolder);
-								tempPos++;
-								break;
-							}
-						}
-					
 					}
 				}
 				printf("\n");
