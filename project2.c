@@ -100,6 +100,7 @@ int main(int argc, char *argv[])
 
 	int hold = 0;
 
+	printf("hello\n");
 	if (*v == 'B')
 	for (int i = 0; i < count; i++)
 	{
