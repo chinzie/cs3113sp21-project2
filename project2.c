@@ -184,7 +184,7 @@ int main(int argc, char *argv[])
                         		}
 					if (c > origin)
                         		{
-						printf("here 1\n");
+						//printf("here 1\n");
                                 		printf("FAIL REQUEST %s %d\n", arr[index].s, c);
 						for (int k = 0; k < 32; k++)
 						{
@@ -213,14 +213,13 @@ int main(int argc, char *argv[])
 					break;
 				}
 
-				//printf("gap at %d is %d\n", i, arr[i].gap);
+				printf("gap at %d is %d\n", i, arr[i].gap);
 				if (arr[i].gap > 0 && arr[i+1].address != '\0')//if there is a gap then consider it for best fit
 				{
-					//printf("gap found!\n");
+					printf("gap found!\n");
 					//find out if gap is big enough
 					if (arr[i].gap >= c)
 					{
-
 						//find out if the hole it makes will be the smallest
 						int hole = arr[i].gap - c;
 						//printf("hole: %d = %d - %d\n", hole, arr[i].gap, c);
@@ -318,7 +317,7 @@ int main(int argc, char *argv[])
                         		index++;
 					break;
 				}
-				else if (holder - c < 0)
+				else if (holder - c < 0)//not enough space
 				{
 					printf("here 2\n");
 					//printf("%d\n", holder - c);
