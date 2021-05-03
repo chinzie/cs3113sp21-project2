@@ -216,8 +216,8 @@ int main(int argc, char *argv[])
 				}
 				
 
-				//printf("%d\n", c);
-				//printf("%d\n", holder);
+				printf("%d ", c);
+				printf("%d\n", holder);
 				
 
 				//printf("gap at %d is %d\n", i, arr[i].gap);
