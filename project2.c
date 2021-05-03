@@ -519,6 +519,8 @@ int main(int argc, char *argv[])
 					}
 					if (arr[e].gap != 0)//skip it because its a gap
 					{
+						//printf("skip");
+						tempPos++;
 						continue;
 					}
 					else
