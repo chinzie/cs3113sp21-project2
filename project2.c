@@ -214,9 +214,11 @@ int main(int argc, char *argv[])
                         		index++;
 					break;
 				}
+				
+
 
 				//printf("gap at %d is %d\n", i, arr[i].gap);
-				if (arr[i].gap > 0 && arr[i+1].address != '\0')//if there is a gap then consider it for best fit
+				if (arr[i].gap > 0)// && arr[i+1].address != '\0')//if there is a gap then consider it for best fit
 				{
 					//printf("gap found!\n");
 					//find out if gap is big enough
@@ -490,7 +492,7 @@ int main(int argc, char *argv[])
 					{
 						for (int r = 0; r < index; r++)
 						{
-							if (arr[r].position == tempPos)
+							if (arr[r].position == tempPos && arr[r].gap == 0)
 							{
 								printf("(%s, %d, %d) ", arr[r].s, arr[r].amount, arr[r].addressHolder);
 								tempPos++;
