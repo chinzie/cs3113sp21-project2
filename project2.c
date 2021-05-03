@@ -22,6 +22,8 @@ struct ACTION
 	int gapLeft;
 
 	int position;
+
+	int changed;
 };
 
 int main(int argc, char *argv[])
@@ -281,6 +283,7 @@ int main(int argc, char *argv[])
 						//printf("%d\n", arr[smallestHoleIndex].address);
 						int gapHolder = arr[smallestHoleIndex].address + arr[index].amount;
 
+						arr[smallestHoleIndex].changed = 1;
 						//printf("indexer: %d\n", index);
 						//printf("Index: %d\n", smallestHoleIndex);
 						int addressHold = arr[smallestHoleIndex].address;
@@ -481,7 +484,8 @@ int main(int argc, char *argv[])
                         	}
 
                         	temp = 0;
-				arr[indexHolder].position = 11000;
+				//arr[indexHolder].position = 11000;
+				arr[indexHolder].changed = 2;
 
 			}
 		}
@@ -504,10 +508,17 @@ int main(int argc, char *argv[])
 					}
 					if (arr[e].gap != 0)//skip it because its a gap
 					{
-						if (arr[e].position == 11000)//unoccupied
+						if (arr[e].changed == 2)//unoccupied
 						{
-							//printf("skipper\n");
-							tempPos++;
+							if (arr[e].position == 11000)
+							{
+								continue;
+							}
+							else
+							{
+								//printf("skipper\n");
+								tempPos++;
+							}
 						}
 						//printf("%d\n", arr[e].position);
 						//printf("skip\n");
@@ -520,7 +531,7 @@ int main(int argc, char *argv[])
 						{
 							//printf("index: %d\n", r);
 							//printf("%d  %d\n", tempPos, arr[r].position);
-							//printf("(%s, %d, %d, %d)\n", arr[r].s, arr[r].amount, arr[r].addressHolder, arr[r].position);
+							//printf("(%s, %d, %d, %d, %d)\n", arr[r].s, arr[r].amount, arr[r].addressHolder, arr[r].position, arr[r].changed);
 							//printf("%d\n", tempPos);
 							if (arr[r].position == tempPos && arr[r].gap == 0)
 							{
