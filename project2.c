@@ -387,6 +387,10 @@ int main(int argc, char *argv[])
 				if (strcmp(str, arr[i].s) == 0)
 				{
 					//printf("found!\n");
+					if (i+1==index)
+					{
+						holder = holder + arr[i].amount;
+					}
 					memHolder = arr[i].amount;
 					indexHolder = i;
 					//printf("holder: %d\n", indexHolder);
@@ -521,7 +525,7 @@ int main(int argc, char *argv[])
 					{
 						printf("(%d, %d) ", arr[u].gap, arr[u].gapLeft);
 					}
-					else if (u+1 >= index)
+					else if (u+1 >= index && memTemp < origin)
 					{
 						printf("(%d, %d) ", holder, memTemp);
 						break;
