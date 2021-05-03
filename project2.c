@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
 	int index = 0;
 
 	int hold = 0;
-	printf("holder is: %d\n", holder);
+	//printf("holder is: %d\n", holder);
 
 	if (*v == 'B')
 	for (int i = 0; i < count; i++)
@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
 					int address = memTemp;
                         		arr[index].amount = c;
                         		holder = holder - c;
-					printf("holder: %d\n", holder);
+					//printf("holder: %d\n", holder);
                         		arr[index].address = memTemp;
 					arr[index].addressHolder = memTemp;
                         		printf("ALLOCATED ");
@@ -215,10 +215,10 @@ int main(int argc, char *argv[])
 					break;
 				}
 
-				printf("gap at %d is %d\n", i, arr[i].gap);
+				//printf("gap at %d is %d\n", i, arr[i].gap);
 				if (arr[i].gap > 0 && arr[i+1].address != '\0')//if there is a gap then consider it for best fit
 				{
-					printf("gap found!\n");
+					//printf("gap found!\n");
 					//find out if gap is big enough
 					if (arr[i].gap >= c)
 					{
@@ -305,7 +305,7 @@ int main(int argc, char *argv[])
 					int address = memTemp;
                         		arr[index].amount = c;
                         		holder = holder - c;
-					printf("holder2: %d\n", holder); 
+					//printf("holder2: %d\n", holder); 
                         		arr[index].address = memTemp;
 					arr[index].addressHolder = memTemp;
                         		printf("ALLOCATED ");
@@ -322,10 +322,10 @@ int main(int argc, char *argv[])
                         		index++;
 					break;
 				}
-				else if (holder - c < 0)//not enough space
+				else if (origin - c < 0)//not enough space
 				{
-					printf("%d - %d = %d\n", holder, c, holder - c);
-					printf("here 2\n");
+					//printf("%d - %d = %d\n", holder, c, holder - c);
+					//printf("here 2\n");
 					//printf("%d\n", holder - c);
 					for (int i = 0; i < temp; i++)
                                         {
