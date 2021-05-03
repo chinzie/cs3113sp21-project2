@@ -299,9 +299,9 @@ int main(int argc, char *argv[])
                                         	//str[0] = '\0';//reset
                                         	//arr[index].gap = 0;
 
-						//printf("new gap is: %d\n", arr[smallestHoleIndex].gap);
+						//printf("new gap is: %d\n", arr[index].amount);
 						arr[smallestHoleIndex].gapLeft = gapHolder;
-						//arr[smallestHoleIndex].address = 100;
+						arr[smallestHoleIndex].addressHolder = arr[smallestHoleIndex].address + arr[index].amount;
 						index++;
 						break;
 					}
@@ -540,26 +540,29 @@ int main(int argc, char *argv[])
 			}
 			else if (pretemp[i+5] == 'A' && pretemp[i+6] == 'V')
 			{
+				int noGap = 0;
 				i = i + 14;
 				//printf("%d, %d\n", holder, origin);
 
 				for (int u = 0; u <= index; u++)
 				{
+					//printf("%d\n", arr[u].gap);
 					if (holder == origin)
 					{
 						printf("(%d, %d) ", origin, memTemp);
 						break;
 					}
-					if (arr[u].gap > 0 && index > 1)
+					else if (arr[u].gap > 0 && index > 1)
 					{
-						printf("(%d, %d) ", arr[u].gap, arr[u].gapLeft);
+						printf("(%d, %d) ", arr[u].gap, arr[u].addressHolder);//.gapLeft);
+						noGap = 1;
 					}
 					else if (u+1 >= index && memTemp < origin)
 					{
 						printf("(%d, %d) ", holder, memTemp);
 						break;
 					}
-					else if (holder == 0)
+					else if (holder == 0 && u + 1 > index && noGap == 0)
 					{
 						printf("FULL");
 						break;
