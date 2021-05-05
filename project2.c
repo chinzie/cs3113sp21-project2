@@ -541,7 +541,7 @@ int main(int argc, char *argv[])
 				//printf("indexHolder: %d\n", indexHolder);
 				//combine gaps
 				//both conditions cannot be true at the same time
-				if (arr[indexHolder-1].gap > 0)
+				if (arr[indexHolder-1].gap > 0 && arr[indexHolder-1].changed == 0)
 				{
 					int positioner = indexHolder - 1;
 					if(arr[indexHolder-1].position == 11000)
@@ -573,7 +573,7 @@ int main(int argc, char *argv[])
 					//printf("lower gap\n");
 					//gap under it
 				}
-				else if (arr[indexHolder+1].gap > 0)
+				else if (arr[indexHolder+1].gap > 0 && arr[indexHolder+1].changed == 0)
 				{
 					int positioner = indexHolder + 1;
 					if (arr[indexHolder+1].position == 11000)
