@@ -646,9 +646,8 @@ int main(int argc, char *argv[])
 							break;
 						}
 					}
-					
-						
-					if (arr[e].gap == 0)
+					//printf("gap is: %d\n", arr[e].gap);
+					if (arr[tempPos].gap == 0)
                                         {
 						//printf("hello\n");
                                                 for (int r = 0; r <= index; r++)
