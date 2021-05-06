@@ -262,14 +262,16 @@ int main(int argc, char *argv[])
 						{
 							//printf("j is: %d\n", j);
 							//printf("gap is : %d\n", arr[j].gap);
-							if (arr[j].gap > 0 && arr[j].gap >= c)//gap exists and is big enough
+							if (arr[j].gap > 0 && arr[j].gap >= c && arr[j].changed != 3)//gap exists and is big enough
 							{
 								//printf("hello\n");
 								//printf("index is %d, j is %d\n", index, j);
 								newHole = arr[j].gap - c;
-								//printf("newHole: %d\n", newHole);
+								//printf("hole: %d\n", hole);
+								//printf("holderhole: %d\n", holder - c);
 								if (newHole < hole)//smaller hole made
 								{
+									//printf("smaller hole: %d\n", newHole);
 									hole = newHole;//set hole equal to the smaller hole
 									smallestHoleIndex = j;//save index of gap for smallest hole
 								}
@@ -277,7 +279,7 @@ int main(int argc, char *argv[])
 								{
 									hole = hole;
 								}
-								if (j == trap && holder - c < hole && holder - c >= 0)
+								if ((j == trap && holder - c < hole && holder - c >= 0))// ||(j==trap && holder - c < newHole && holder - c >= 0))
 								{
 									for (int i = 0; i < temp; i++)
                                         				{
@@ -286,6 +288,7 @@ int main(int argc, char *argv[])
                                         				int address = memTemp;
                                         				arr[index].amount = c;
                                         				holder = holder - c;
+									//printf("c : %d\n", c);
                                         				//printf("holder2: %d\n", holder);
                                         				arr[index].address = memTemp;
                                         				arr[index].addressHolder = memTemp;
@@ -366,6 +369,7 @@ int main(int argc, char *argv[])
 						//
 						arr[index].position = arr[smallestHoleIndex].position;
 						//arr[smallestHoleIndex].position = arr[index].position + 1;//increment gap position
+						
 
 						for (int i = 0; i < index; i++)
 						{
@@ -376,11 +380,11 @@ int main(int argc, char *argv[])
 						{
 							arr[smallestHoleIndex].position = arr[smallestHoleIndex].position + 1;
 							//printf("new position: %d\n", arr[smallestHoleIndex].position);
-							for (int g = arr[smallestHoleIndex].position; g < index; g++)
+							for (int g = 0; g <= index; g++)
                                                 	{
-                                                        	if (arr[smallestHoleIndex].position <= arr[g].position)// && arr[g].gap == 0)
-                                                        	{
-                                                                	//printf("changing %d at %d\n", arr[g].position, g);
+		//printf("%d <= %d at %d != %d  %d\n", arr[smallestHoleIndex].position, arr[g].position, arr[smallestHoleIndex].addressHolder, arr[g].address, arr[g].amount);
+                                                      if (arr[smallestHoleIndex].position <= arr[g].position && arr[g].addressHolder != arr[smallestHoleIndex].addressHolder && arr[g].changed != 3)                                                        	{
+                                                                	//printf("position %d now is %d\n", arr[g].position, arr[g].position + 1);
                                                                 	arr[g].position = arr[g].position + 1;
                                                         	}
                                                 	}
@@ -447,7 +451,7 @@ int main(int argc, char *argv[])
                                         	//arr[index].gap = 0;
 
 						//printf("new gap is: %d\n", arr[index].amount);
-						arr[smallestHoleIndex].gapLeft = gapHolder;
+						//arr[smallestHoleIndex].gapLeft = gapHolder;
 						//arr[smallestHoleIndex].amount = gapHolder;
 						arr[smallestHoleIndex].addressHolder = arr[smallestHoleIndex].addressHolder + arr[index].amount;
 						index++;
@@ -822,7 +826,7 @@ int main(int argc, char *argv[])
                                                 {
                                                         //printf("index: %d\n", r);
                                                         //printf("%d  %d\n", tempPos, arr[r].position);
-                                                       // printf("(%s, %d, %d, %d, %d, %d)\n", arr[r].s, arr[r].amount, arr[r].addressHolder, arr[r].position, arr[r].gap, arr[r].changed);
+                                                        //printf("(%s, %d, %d, %d, %d, %d)\n", arr[r].s, arr[r].amount, arr[r].addressHolder, arr[r].position, arr[r].gap, arr[r].changed);
 							/*
 							if (arr[r].gap == 0 && arr[r].position == 11000 && arr[r].changed == 0)
 							{
