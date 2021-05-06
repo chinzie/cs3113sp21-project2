@@ -1023,7 +1023,7 @@ int main(int argc, char *argv[])
                                                   printf("(%d, %d) ", origin, none);
                                                   break;
                                         }
-					else if (arr[u].gap > 0 && index > 1 && arr[u].changed != 3)
+					else if (arr[u].gap > 0 && index > 0 && arr[u].changed != 3)
 					{
 						printf("(%d, %d) ", arr[u].gap, arr[u].addressHolder);
 						noGap = 1;
