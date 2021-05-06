@@ -7,6 +7,7 @@
 #include <stdint.h>
 #include <ctype.h>
 
+
 struct ACTION
 {
 	char s[32];
