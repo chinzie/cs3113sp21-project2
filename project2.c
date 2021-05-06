@@ -304,18 +304,46 @@ int main(int argc, char *argv[])
                                         	printf("%d", arr[smallestHoleIndex].addressHolder);
 
 						//printf("position: %d\n", arr[smallestHoleIndex].position);
+						//
 						arr[index].position = arr[smallestHoleIndex].position;
-						arr[smallestHoleIndex].position = arr[index].position + 1;//increment gap position
-						//shuffle all positions that are above the filled gap
-						if (arr[smallestHoleIndex].position >= arr[smallestHoleIndex+1].position)
-						for (int g = 0; g < index; g++)
+						//arr[smallestHoleIndex].position = arr[index].position + 1;//increment gap position
+
+						//printf("hole: %d\n", hole);
+						if (hole > 0)
 						{
-							if (arr[smallestHoleIndex].position <= arr[g].position && arr[g].gap == 0)
-							{
-								//printf("changing %d at %d\n", arr[g].position, g);
-								arr[g].position = arr[g].position + 1;
-							}
+							arr[smallestHoleIndex].position = arr[smallestHoleIndex].position + 1;
+							//printf("new position: %d\n", arr[smallestHoleIndex].position);
+							for (int g = arr[smallestHoleIndex].position; g < index; g++)
+                                                	{
+                                                        	if (arr[smallestHoleIndex].position <= arr[g].position)// && arr[g].gap == 0)
+                                                        	{
+                                                                	//printf("changing %d at %d\n", arr[g].position, g);
+                                                                	arr[g].position = arr[g].position + 1;
+                                                        	}
+                                                	}
 						}
+						else if (hole == 0)
+						{
+							arr[index].position = arr[smallestHoleIndex].position;
+						}
+
+
+						//shuffle all positions that are above the filled gap including the gap
+						//if (arr[smallestHoleIndex].position >= arr[smallestHoleIndex+1].position)
+						//for (int g = arr[smallestHoleIndex].position; g < index; g++)
+						//{
+						//	if (arr[smallestHoleIndex].position <= arr[g].position)// && arr[g].gap == 0)
+						//	{
+						//		//printf("changing %d at %d\n", arr[g].position, g);
+						//		arr[g].position = arr[g].position + 1;
+						//	}
+						//}
+						/*
+						else
+						{
+							arr[smallestHoleIndex].position = arr[index].position + 1;//increment gap position
+						}
+						*/
 						
 
 
@@ -356,6 +384,7 @@ int main(int argc, char *argv[])
 
 						//printf("new gap is: %d\n", arr[index].amount);
 						arr[smallestHoleIndex].gapLeft = gapHolder;
+						//arr[smallestHoleIndex].amount = gapHolder;
 						arr[smallestHoleIndex].addressHolder = arr[smallestHoleIndex].addressHolder + arr[index].amount;
 						index++;
 						//printf("increment\n");
@@ -484,7 +513,7 @@ int main(int argc, char *argv[])
 				if (strcmp(str, arr[i].s) == 0)
 				{
 					//printf("found!\n");
-					if (i+1==index)
+					if (i==index)
 					{
 						holder = holder + arr[i].amount;
 					}
@@ -534,14 +563,77 @@ int main(int argc, char *argv[])
                                 	str[i] = '\0';
                         	}
 
+
                         	temp = 0;
 				//arr[indexHolder].position = 11000;
 				arr[indexHolder].changed = 2;
 
 				//printf("indexHolder: %d\n", indexHolder);
+				//printf("%d\n", arr[indexHolder].position);
 				//combine gaps
 				//both conditions cannot be true at the same time
-				if (arr[indexHolder-1].gap > 0 && arr[indexHolder-1].changed == 0)
+				//printf("%d, %d\n", arr[arr[indexHolder].position - 1].gap, arr[arr[indexHolder].position - 1].changed);
+				//printf("%d, %d\n", arr[arr[indexHolder].position + 1].gap, arr[arr[indexHolder].position + 1].changed);
+
+				int pos = arr[indexHolder].position;
+				for (int f = 0; f < index; f++)
+				{
+					if (arr[f].position == pos + 1 && arr[f].gap > 0 && arr[f].changed != 3)//if the object has a gap and its position is one above it, changed = 3 means ignore
+					{
+						//printf("rigth below you\n");
+						arr[indexHolder].position = arr[indexHolder].position; //position stays the same
+						arr[indexHolder].gap = arr[indexHolder].gap + arr[f].gap;//add the gaps
+						arr[indexHolder].addressHolder = arr[indexHolder].addressHolder;//address stays the same
+						arr[indexHolder].changed = 2; //set change to 2 meaning its a gap
+					        arr[f].changed = 3;//forget about this forever
+						for (int g = 0; g < index; g++)//shuffle down by one
+						{
+							if (arr[g].position > arr[indexHolder].position)
+							{
+								arr[g].position = arr[g].position - 1;
+							}
+						}
+						break;
+					}
+				}
+				
+				for (int f = 0; f < index; f++)
+				{
+					if (arr[f].position == pos - 1 && arr[f].gap > 0 && arr[f].changed != 3)
+					{
+						//printf("right above you\n");
+						arr[indexHolder].position = arr[f].position;
+						arr[indexHolder].gap = arr[indexHolder].gap + arr[f].gap;
+						arr[indexHolder].addressHolder = arr[f].addressHolder;
+						arr[indexHolder].changed = 2;
+						arr[f].changed = 3;
+						for (int g = 0; g < index; g++)
+						{
+							if (arr[g].position > arr[indexHolder].position)
+							{
+								arr[g].position = arr[g].position - 1;
+							}
+						}
+						break;
+					}
+				}
+
+
+
+						
+
+
+						
+
+
+
+
+
+
+
+
+				/*
+				if (arr[indexHolder-1].gap > 0 && arr[indexHolder-1].changed == 1)
 				{
 					int positioner = indexHolder - 1;
 					if(arr[indexHolder-1].position == 11000)
@@ -570,10 +662,10 @@ int main(int argc, char *argv[])
 					arr[indexHolder].position = arr[positioner].position;
 					arr[positioner].position = 11000;//gone forever
 
-					//printf("lower gap\n");
+					printf("higher gap\n");
 					//gap under it
 				}
-				else if (arr[indexHolder+1].gap > 0 && arr[indexHolder+1].changed == 0)
+				else if (arr[indexHolder+1].gap > 0 && arr[indexHolder+1].changed == 1)
 				{
 					int positioner = indexHolder + 1;
 					if (arr[indexHolder+1].position == 11000)
@@ -598,9 +690,10 @@ int main(int argc, char *argv[])
                                         arr[indexHolder].position = arr[positioner].position;
                                         arr[positioner].position = 11000;//gone forever
 
-					//printf("above gap\n");
+					printf("lower gap\n");
 					//gap above it
 				}
+				*/
 
 			}
 		}
@@ -647,14 +740,14 @@ int main(int argc, char *argv[])
 						}
 					}
 					//printf("gap is: %d\n", arr[e].gap);
-					if (arr[tempPos].gap == 0)
-                                        {
+					//if (arr[tempPos].gap == 0)
+                                        //{
 						//printf("hello\n");
                                                 for (int r = 0; r <= index; r++)
                                                 {
                                                         //printf("index: %d\n", r);
                                                         //printf("%d  %d\n", tempPos, arr[r].position);
-                                                        //printf("(%s, %d, %d, %d, %d, %d)\n", arr[r].s, arr[r].amount, arr[r].addressHolder, arr[r].position, arr[r].gap, arr[r].changed);
+                                                        // printf("(%s, %d, %d, %d, %d, %d)\n", arr[r].s, arr[r].amount, arr[r].addressHolder, arr[r].position, arr[r].gap, arr[r].changed);
 							/*
 							if (arr[r].gap == 0 && arr[r].position == 11000 && arr[r].changed == 0)
 							{
@@ -678,19 +771,37 @@ int main(int argc, char *argv[])
                                                                 printf("(%s, %d, %d) ", arr[r].s, arr[r].amount, arr[r].addressHolder);
                                                                 tempPos++;
                                                                 //printf("temp: %d\n", tempPos);
-                                                                break;
 							}
-							else if (r+1 >= index)
+							else if (arr[r].position == 11000)
 							{
 								tempPos++;
-								break;
+								continue;
 							}
+							else if (arr[r].position == tempPos && arr[r].gap != 0 && arr[r].changed == 1)
+							{
+								tempPos++;
+								
+							}
+							else if (arr[r].position == tempPos && arr[r].gap != 0 && arr[r].changed == 2)
+							{
+								tempPos++;
+							}
+							//else
+							//{
+							//	tempPos++;
+							//}
+							//else if (r+1 >= index)
+							//{
+							//	tempPos++;
+							//	break;
+							//}
                                                 }
 
-                                        }
+                                        //}
+					/*
 					else if (arr[e].gap != 0 && arr[e].changed == 3)
 					{
-						/*
+						
 						//printf("looking: (%s, %d, %d, %d, %d, %d)\n", arr[e].s, arr[e].amount,
                                                  //                               arr[e].addressHolder, arr[e].position, arr[e].changed, arr[e].gap);
 						//printf("hi\n");
@@ -719,8 +830,8 @@ int main(int argc, char *argv[])
                                                 	}
 
 						}
-						*/
-						/*
+						
+						
 							if (arr[e].position == 11000)
 							{
 								printf("here\n");
@@ -733,7 +844,7 @@ int main(int argc, char *argv[])
 								printf("skipper\n");
 								tempPos++;
 							}
-							*/
+							
 						
 						//printf("%d\n", arr[e].position);
 						//printf("skip\n");
@@ -753,6 +864,8 @@ int main(int argc, char *argv[])
 					}	
 					
 				}
+				*/
+			}
 				printf("\n");
 
 			}
