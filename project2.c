@@ -1038,9 +1038,10 @@ int main(int argc, char *argv[])
 					{
 						for (int r = 0; r <= index; r++)
 						{
+
 							if (arr[r].position == tempPos && arr[r].gap > 0 && (arr[r].changed == 1 || arr[r].changed == 2))
 							{
-								printf("(%d, %d) ", arr[u].gap, arr[u].addressHolder);
+								printf("(%d, %d) ", arr[r].gap, arr[r].addressHolder);
 								tempPos++;
 								noGap = 1;
 							}
