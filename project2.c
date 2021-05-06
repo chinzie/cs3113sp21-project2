@@ -1846,8 +1846,10 @@ int main(int argc, char *argv[])
 						int hole = arr[i].gap - c;
 						//printf("hole: %d = %d - %d\n", hole, arr[i].gap, c);
 						//printf("here\n");
-						//printf("smallestHoleIndex: %d\n", smallestHoleIndex);
-						//printf("hole: %d\n", hole);
+						//printf("hole: %d = %d - %d\n", hole, arr[i].gap, c);
+						int newHole = 0;
+						int smallestHoleIndex = i;
+						
 						//by now we have the smallest hole and its index
 						//place the process in this gap theoretically
 
