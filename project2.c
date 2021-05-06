@@ -2506,7 +2506,7 @@ int main(int argc, char *argv[])
 				int gapChecker = 0;
 				//printf("gap at %d is %d\n", i, arr[i].gap);
 				
-				if (holder == 0; arr[i].gap > 0 && arr[i].changed != 3)// && arr[i+1].address != '\0')//if there is a gap then consider it for best fit
+				if (holder == 0 && arr[i].gap > 0 && arr[i].changed != 3)// && arr[i+1].address != '\0')//if there is a gap then consider it for best fit
 				{
 					int trap = 0;
 					for (int w = 0; w < index; w++)
