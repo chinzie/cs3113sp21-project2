@@ -992,6 +992,7 @@ int main(int argc, char *argv[])
 			}
 			else if (pretemp[i+5] == 'A' && pretemp[i+6] == 'V')
 			{
+				int tempPos = 0;
 				int noGap = 0;
 				i = i + 14;
 				//printf("%d, %d\n", holder, origin);
@@ -1023,11 +1024,33 @@ int main(int argc, char *argv[])
                                                   printf("(%d, %d) ", origin, none);
                                                   break;
                                         }
-					else if (arr[u].gap > 0 && index > 0 && arr[u].changed != 3)
+					else if (u+1 >= index && memTemp < origin)
+                                        {
+                                                printf("(%d, %d) ", holder, memTemp);
+                                                break;
+                                        }
+                                        else if (holder == 0 && u + 1 > index && noGap == 0)
+                                        {
+                                                printf("FULL");
+                                                break;
+                                        }
+					else
 					{
-						printf("(%d, %d) ", arr[u].gap, arr[u].addressHolder);
-						noGap = 1;
+						for (int r = 0; r <= index; r++)
+						{
+							if (arr[r].position == tempPos && arr[r].gap > 0 && (arr[r].changed == 1 || arr[r].changed == 2))
+							{
+								printf("(%d, %d) ", arr[u].gap, arr[u].addressHolder);
+								tempPos++;
+								noGap = 1;
+							}
+							else if (arr[r].position == tempPos && arr[r].changed == 0)
+							{
+								tempPos++;
+							}
+						}
 					}
+					/*
 					else if (u+1 >= index && memTemp < origin)
 					{
 						printf("(%d, %d) ", holder, memTemp);
@@ -1038,6 +1061,7 @@ int main(int argc, char *argv[])
 						printf("FULL");
 						break;
 					}
+					*/
 				}
 				printf("\n");
 				//LIST AVAILABLE
