@@ -1065,7 +1065,7 @@ int main(int argc, char *argv[])
 								newHole = arr[j].gap - c;
 								//printf("hole: %d\n", hole);
 								//printf("holderhole: %d\n", holder - c);
-								if (newHole < hole)//smaller hole made
+								if (newHole > hole)//smaller hole made
 								{
 									//printf("smaller hole: %d\n", newHole);
 									hole = newHole;//set hole equal to the smaller hole
@@ -1075,7 +1075,7 @@ int main(int argc, char *argv[])
 								{
 									hole = hole;
 								}
-								if ((j == trap && holder - c < hole && holder - c >= 0))// ||(j==trap && holder - c < newHole && holder - c >= 0))
+								if ((j == trap && holder - c > hole && holder - c >= 0))// ||(j==trap && holder - c < newHole && holder - c >= 0))
 								{
 									for (int i = 0; i < temp; i++)
                                         				{
@@ -1116,7 +1116,7 @@ int main(int argc, char *argv[])
                                         				break;
 								}
 							}
-							else if ((j == trap && holder - c < hole && holder - c >= 0))// ||(j==trap && holder - c < newHole && holder - c >= 0))
+							else if ((j == trap && holder - c > hole && holder - c >= 0))// ||(j==trap && holder - c < newHole && holder - c >= 0))
                                                                 {
                                                                         for (int i = 0; i < temp; i++)
                                                                         {
