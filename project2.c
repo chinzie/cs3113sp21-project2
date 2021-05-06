@@ -903,5 +903,442 @@ int main(int argc, char *argv[])
 	}
 
 
+	if (*v == 'W')
+        for (int i = 0; i < count; i++)
+        {
+                if (pretemp[i] == '#')
+                {
+                        //printf("ignore\n");
+                        //go to next line
+                        for (int j = i; j < count;)
+                        {
+                                if (pretemp[j] == '\n')
+                                {
+                                        i = j;
+                                        break;
+                                }
+                                else
+                                {
+                                        j++;
+                                }
+                        }
+                }
+                else if (pretemp[i] == 'R' && pretemp[i+1] == 'E' && pretemp[i+2] == 'Q')
+                {
+
+                        //printf("REQUEST ");
+                        //know command will be REQUEST
+                        i = i + 8;
+                        //allocate process name into process array
+                        for (int k = 0; k < 32; k++)
+                        {
+                                if (pretemp[i] != ' ')
+                                {
+                                        process[k] = pretemp[i];
+                                        i++;
+                                        temp++;
+                                }
+                                else
+                                {
+                                        //reached end of process name
+                                        break;
+                                }
+                        }
+
+
+                        i = i + 1;
+                        //allocate memory into memorysize array
+			for (int k = 0; k < 32; k++)
+                        {
+                                if (pretemp[i] != '\n' && pretemp[i] != ' ')
+                                {
+                                        memorySize[k] = pretemp[i];
+                                        i++;
+                                }
+                                else
+                                {
+                                        //reached end of memory size
+                                        break;
+                                }
+                        }
+
+                        int c = atoi(memorySize);//append all chars to an int
+                        //printf("c is: %d\n", c);
+                        /*
+                        if (c > origin)
+                        {
+                                printf("FAIL REQUEST %s %d\n", str, c);
+                                break;
+                        }
+                        */
+                        for (int i = 0; i < 32; i++)//reset memsize array for future use
+                        {
+                                memorySize[i] = '\0';
+                        }
+
+                        //stuff is stored temporarily
+                        //find out if space
+                        for (int i = 0; i <= index; i++)
+                        {
+                                if (index == 0)//first one
+                                {
+                                        for (int i = 0; i < temp; i++)
+                                        {
+                                                strncat(arr[index].s, &process[i], 1);
+                                        }
+                                        if (c > origin)
+                                        {
+                                                //printf("here 1\n");
+                                                printf("FAIL REQUEST %s %d\n", arr[index].s, c);
+                                                for (int k = 0; k < 32; k++)
+                                                {
+                                                        arr[index].s[k] = '\0';
+                                                }
+
+                                                break;
+                                        }
+					}
+                                        int address = memTemp;
+                                        arr[index].amount = c;
+                                        holder = holder - c;
+                                        //printf("holder: %d\n", holder);
+                                        arr[index].address = memTemp;
+                                        arr[index].addressHolder = memTemp;
+                                        printf("ALLOCATED ");
+                                        printf("%s", arr[index].s);
+                                        printf(" ");
+                                        printf("%d", address);
+                                        //arr[index].address = memTemp;
+                                        memTemp = c + address;
+                                        printf("\n");
+                                        temp = 0;//reset
+                                        //str[0] = '\0';//reset
+                                        arr[index].gap = 0;
+                                        arr[index].position = index;
+                                        arr[index].positionHolder = index;
+                                        index++;
+                                        //printf("increment3\n");
+                                        break;
+                                }
+
+
+                                //printf("%d ", c);
+                                //printf("%d\n", holder);
+
+
+                                int gapChecker = 0;
+                                //printf("gap at %d is %d\n", i, arr[i].gap);
+                                if (arr[i].gap > 0 && arr[i].changed != 3)// && arr[i+1].address != '\0')//if there is a gap then consider it for best fit
+                                {
+                                        int trap = 0;
+                                        for (int w = 0; w < index; w++)
+                                        {
+                                                if (arr[w].gap > 0)
+                                                {
+                                                        trap = w;
+                                                }
+                                        }
+
+                                        //printf("gap found!\n");
+                                        if (i+1 == index && arr[i].gap < c)
+                                        {
+                                                //printf("no gap found\n");
+                                                gapChecker = 1;
+                                        }
+					int skip = 0;
+                                        //printf("%d\n", c);
+                                        //find out if gap is big enough
+                                        if (arr[i].gap >= c)
+                                        {
+                                                //find out if the hole it makes will be the smallest
+                                                int hole = arr[i].gap - c;
+                                                //printf("hole: %d = %d - %d\n", hole, arr[i].gap, c);
+                                                int newHole = 0;
+                                                int smallestHoleIndex = i;
+                                                for (int j = i; j <= trap; j++)
+                                                {
+                                                        //printf("trap: %d\n", trap);
+                                                        //printf("j is: %d\n", j);
+                                                        //printf("gap is : %d   %d\n", arr[j].gap, arr[j].changed);
+                                                        if (arr[j].gap > 0 && arr[j].gap >= c && arr[j].changed != 3)//gap exists and is big enough
+                                                        {
+                                                                //printf("hello\n");
+                                                                //printf("index is %d, j is %d\n", index, j);
+                                                                newHole = arr[j].gap - c;
+                                                                //printf("hole: %d\n", hole);
+                                                                //printf("holderhole: %d\n", holder - c);
+                                                                if (newHole < hole)//smaller hole made
+                                                                {
+                                                                        //printf("smaller hole: %d\n", newHole);
+                                                                        hole = newHole;//set hole equal to the smaller hole
+                                                                        smallestHoleIndex = j;//save index of gap for smallest hole
+                                                                }
+                                                                else if (newHole == hole)
+                                                                {
+                                                                        hole = hole;
+                                                                }
+                                                                if ((j == trap && holder - c < hole && holder - c >= 0))// ||(j==trap && holder - c < newHole && holder - c >= 0))
+                                                                {
+                                                                        for (int i = 0; i < temp; i++)
+                                                                        {
+                                                                                strncat(arr[index].s, &process[i], 1);
+                                                                        }
+                                                                        int address = memTemp;
+                                                                        arr[index].amount = c;
+                                                                        holder = holder - c;
+                                                                        //printf("c : %d\n", c);
+                                                                        //printf("holder2: %d\n", holder);
+                                                                        arr[index].address = memTemp;
+                                                                        arr[index].addressHolder = memTemp;
+                                                                        printf("ALLOCATED ");
+                                                                        printf("%s", arr[index].s);
+                                                                        printf(" ");
+                                                                        printf("%d", address);
+									//arr[index].address = memTemp;
+                                                                        memTemp = c + address;
+                                                                        printf("\n");
+                                                                        temp = 0;//reset
+                                                                        //str[0] = '\0';//reset
+                                                                        arr[index].gap = 0;
+                                                                        //going on the top
+                                                                        int count = 0;
+                                                                        for (int j = 0; j <index; j++)
+                                                                        {
+                                                                                if (arr[j].changed != 3)
+                                                                                {
+                                                                                        count++;
+                                                                                }
+                                                                        }
+
+                                                                        arr[index].position = count;
+                                                                        arr[index].positionHolder = count;
+                                                                        index++;
+                                                                        //printf("increment2\n");
+                                                                        skip = 1;
+                                                                        break;
+                                                                }
+                                                        }
+                                                        else if ((j == trap && holder - c < hole && holder - c >= 0))// ||(j==trap && holder - c < newHole && holder - c >= 0))
+                                                                {
+                                                                        for (int i = 0; i < temp; i++)
+                                                                        {
+                                                                                strncat(arr[index].s, &process[i], 1);
+                                                                        }
+                                                                        int address = memTemp;
+                                                                        arr[index].amount = c;
+                                                                        holder = holder - c;
+                                                                        //printf("c : %d\n", c);
+                                                                        //printf("holder2: %d\n", holder);
+                                                                        arr[index].address = memTemp;
+                                                                        arr[index].addressHolder = memTemp;
+                                                                        printf("ALLOCATED ");
+                                                                        printf("%s", arr[index].s);
+                                                                        printf(" ");
+                                                                        printf("%d", address);
+                                                                        //arr[index].address = memTemp;
+                                                                        memTemp = c + address;
+                                                                        printf("\n");
+                                                                        temp = 0;//reset
+                                                                        //str[0] = '\0';//reset
+                                                                        arr[index].gap = 0;
+                                                                        //going on the top
+                                                                        int count = 0;
+									for (int j = 0; j <index; j++)
+                                                                        {
+                                                                                if (arr[j].changed != 3)
+                                                                                {
+                                                                                        count++;
+                                                                                }
+                                                                        }
+
+                                                                        arr[index].position = count;
+                                                                        arr[index].positionHolder = count;
+                                                                        index++;
+                                                                        //printf("increment2\n");
+                                                                        skip = 1;
+                                                                        break;
+                                                                }
+                                                }
+                                                if (skip == 1)
+                                                {
+                                                        break;
+                                                }
+                                                //printf("here\n");
+                                                //printf("smallestHoleIndex: %d\n", smallestHoleIndex);
+                                                //printf("hole: %d\n", hole);
+                                                //by now we have the smallest hole and its index
+                                                //place the process in this gap theoretically
+
+                                                for (int i = 0; i < temp; i++)
+                                                {
+                                                        strncat(arr[index].s, &process[i], 1);
+                                                }
+
+                                                //arr[index].amount = c;
+
+                                                //printf("%d\n", arr[smallestHoleIndex].amount);
+                                                arr[index].address = c;
+                                                arr[index].amount = c;
+                                                if (smallestHoleIndex == index - 1)
+                                                {
+                                                        //printf("last ");
+                                                        holder = holder - arr[index].amount;
+                                                        //printf("%d\n", holder);
+                                                }
+                                                arr[index].gap = 0;
+                                                //printf("%d\n", arr[smallestHoleIndex].address);
+                                                int gapHolder = arr[smallestHoleIndex].address + arr[index].amount;
+
+                                                arr[smallestHoleIndex].changed = 1;
+                                                //printf("indexer: %d\n", index);
+                                                //printf("Index: %d\n", smallestHoleIndex);
+						int addressHold = arr[smallestHoleIndex].addressHolder;
+                                                arr[index].addressHolder = addressHold;
+                                                //printf("%d\n", addressHold);
+                                                //printf("%d\n", arr[smallestHoleIndex].addressHolder);
+                                                arr[smallestHoleIndex].gap = hole;
+                                                //arr[smallestHoleIndex].address = arr[smallestHoleIndex - 1].amount + arr[smallestHoleIndex - 1].address;
+                                                printf("ALLOCATED ");
+                                                printf("%s", arr[index].s);
+                                                printf(" ");
+                                                printf("%d", arr[smallestHoleIndex].addressHolder);
+
+                                                //printf("position: %d\n", arr[smallestHoleIndex].position);
+                                                //
+                                                arr[index].position = arr[smallestHoleIndex].position;
+                                                //arr[smallestHoleIndex].position = arr[index].position + 1;//increment gap position
+
+
+                                                for (int i = 0; i < index; i++)
+                                                {
+                                                        //printf("position: %d  %d\n", arr[i].position, arr[i].addressHolder);
+                                                }
+                                                //printf("hole: %d\n", hole);
+                                                if (hole > 0)
+                                                {
+                                                        arr[smallestHoleIndex].position = arr[smallestHoleIndex].position + 1;
+                                                        //printf("new position: %d\n", arr[smallestHoleIndex].position);
+                                                        for (int g = 0; g <= index; g++)
+                                                        {
+                //printf("%d <= %d at %d != %d  %d\n", arr[smallestHoleIndex].position, arr[g].position, arr[smallestHoleIndex].addressHolder, arr[g].address, arr[g].amount);
+                                                      if (arr[smallestHoleIndex].position <= arr[g].position && arr[g].addressHolder != arr[smallestHoleIndex].addressHolder && arr[g].changed != 3)                                                            {
+                                                                        //printf("position %d now is %d\n", arr[g].position, arr[g].position + 1);
+                                                                        arr[g].position = arr[g].position + 1;
+                                                                }
+                                                        }
+                                                }
+                                                else if (hole == 0)
+                                                {
+                                                        arr[index].position = arr[smallestHoleIndex].position;
+                                                        arr[smallestHoleIndex].changed = 3;
+                                                }
+
+
+                                                printf("\n");
+                                                temp = 0;//reset
+
+                                                arr[smallestHoleIndex].addressHolder = arr[smallestHoleIndex].addressHolder + arr[index].amount;
+                                                index++;
+                                                //printf("increment\n");
+						break;
+                                        }
+
+                                }
+                                else if (arr[i+1].address == '\0' && holder - c >= 0)//if there is no gap but the next address is empty
+                                {
+                                        //arr[i+1
+                                        //].address == '\0' &&
+                                        //printf("space found!\n");
+                                        //printf("gap at %d is %d\n", i, arr[i].gap);
+                                        for (int i = 0; i < temp; i++)
+                                        {
+                                                strncat(arr[index].s, &process[i], 1);
+                                        }
+                                        /*
+                                        for (int i = 0; i < index; i++)
+                                        {
+                                                 printf("position: %d  %d\n", arr[i].position, arr[i].addressHolder);
+                                        }
+                                        */
+                                        int address = memTemp;
+                                        arr[index].amount = c;
+                                        holder = holder - c;
+                                        //printf("holder2: %d\n", holder);
+                                        arr[index].address = memTemp;
+                                        arr[index].addressHolder = memTemp;
+                                        printf("ALLOCATED ");
+                                        printf("%s", arr[index].s);
+                                        printf(" ");
+                                        printf("%d", address);
+                                        //arr[index].address = memTemp;
+                                        memTemp = c + address;
+                                        printf("\n");
+                                        temp = 0;//reset
+                                        //str[0] = '\0';//reset
+                                        arr[index].gap = 0;
+                                        //going on the top
+                                        int count = 0;
+                                        for (int j = 0; j < index; j++)
+                                        {
+                                                if (arr[j].changed == 0 || arr[j].changed == 1 || arr[j].changed == 2)
+                                                {
+                                                        count = count + 1;
+                                                }
+                                        }
+
+                                        //printf("count: %d\n", count);
+                                        arr[index].position = count;
+                                        arr[index].positionHolder = count;
+					index++;
+                                        for (int i = 0; i < index; i++)
+                                        {
+                                                 //printf("position: %d  %d\n", arr[i].position, arr[i].changed);
+                                        }
+                                        //printf("increment2\n");
+                                        break;
+                                }
+                                else if (origin - c < 0)//not enough space
+                                {
+                                        //printf("%d - %d = %d\n", holder, c, holder - c);
+                                        //printf("here 2\n");
+                                        //printf("%d\n", holder - c);
+                                        for (int i = 0; i < temp; i++)
+                                        {
+                                                strncat(arr[index].s, &process[i], 1);
+                                        }
+                                        arr[index].amount = c;
+                                        printf("FAIL REQUEST %s %d\n", arr[index].s, arr[index].amount);
+                                        for (int k = 0; k < 32; k++)
+                                        {
+                                                arr[index].s[k] = '\0';
+                                        }
+                                        break;
+                                }
+                                else if ((holder == 0 && gapChecker ==1) || (c > holder && i == index))
+                                        {
+                                                //printf("here3\n");
+                                                //printf("%d\n", holder);
+                                                for (int i = 0; i < temp; i++)
+                                                {
+                                                        strncat(arr[index].s, &process[i], 1);
+                                                }
+                                                arr[index].amount = c;
+                                                printf("FAIL REQUEST %s %d\n", arr[index].s, arr[index].amount);
+                                                for (int k = 0; k < 32; k++)
+                                                {
+                                                        arr[index].s[k] = '\0';
+                                                }
+                                                break;
+                                        }
+                        }
+                }
+                else if (pretemp[i] == 'R' && pretemp[i+1] == 'E' && pretemp[i+2] == 'L')
+                {
+                        //printf("RELEASE ");
+                        //know command will be RELEASE
+
+
+
+
 	return 0;
 }
