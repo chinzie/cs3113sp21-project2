@@ -264,6 +264,7 @@ int main(int argc, char *argv[])
 							//printf("gap is : %d\n", arr[j].gap);
 							if (arr[j].gap > 0 && arr[j].gap >= c)//gap exists and is big enough
 							{
+								//printf("hello\n");
 								//printf("index is %d, j is %d\n", index, j);
 								newHole = arr[j].gap - c;
 								//printf("newHole: %d\n", newHole);
@@ -276,7 +277,7 @@ int main(int argc, char *argv[])
 								{
 									hole = hole;
 								}
-								if (j == trap && holder - c < hole )
+								if (j == trap && holder - c < hole && holder - c >= 0)
 								{
 									for (int i = 0; i < temp; i++)
                                         				{
@@ -285,7 +286,7 @@ int main(int argc, char *argv[])
                                         				int address = memTemp;
                                         				arr[index].amount = c;
                                         				holder = holder - c;
-                                        				//printf("holder2: %d\n", holder);
+                                        				printf("holder2: %d\n", holder);
                                         				arr[index].address = memTemp;
                                         				arr[index].addressHolder = memTemp;
                                         				printf("ALLOCATED ");
