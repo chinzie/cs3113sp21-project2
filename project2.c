@@ -233,6 +233,14 @@ int main(int argc, char *argv[])
 				//printf("gap at %d is %d\n", i, arr[i].gap);
 				if (arr[i].gap > 0 && arr[i].changed != 3)// && arr[i+1].address != '\0')//if there is a gap then consider it for best fit
 				{
+					int trap = 0;
+					for (int w = 0; w < index; w++)
+					{
+						if (arr[w].gap > 0)
+						{
+							trap = w;
+						}
+					}
 					//printf("gap found!\n");
 					if (i+1 == index && arr[i].gap < c)
 					{
@@ -240,6 +248,7 @@ int main(int argc, char *argv[])
 						gapChecker = 1;
 					}
 
+					int skip = 0;
 					//printf("%d\n", c);
 					//find out if gap is big enough
 					if (arr[i].gap >= c)
@@ -249,12 +258,15 @@ int main(int argc, char *argv[])
 						//printf("hole: %d = %d - %d\n", hole, arr[i].gap, c);
 						int newHole = 0;
 						int smallestHoleIndex = i;
-						for (int j = i+1; j < index; j++)
+						for (int j = i; j < index; j++)
 						{
+							//printf("j is: %d\n", j);
+							//printf("gap is : %d\n", arr[j].gap);
 							if (arr[j].gap > 0 && arr[j].gap >= c)//gap exists and is big enough
 							{
+								//printf("index is %d, j is %d\n", index, j);
 								newHole = arr[j].gap - c;
-								
+								//printf("newHole: %d\n", newHole);
 								if (newHole < hole)//smaller hole made
 								{
 									hole = newHole;//set hole equal to the smaller hole
@@ -264,8 +276,53 @@ int main(int argc, char *argv[])
 								{
 									hole = hole;
 								}
+								if (j == trap && holder - c < hole )
+								{
+									for (int i = 0; i < temp; i++)
+                                        				{
+                                                				strncat(arr[index].s, &process[i], 1);
+                                        				}
+                                        				int address = memTemp;
+                                        				arr[index].amount = c;
+                                        				holder = holder - c;
+                                        				//printf("holder2: %d\n", holder);
+                                        				arr[index].address = memTemp;
+                                        				arr[index].addressHolder = memTemp;
+                                        				printf("ALLOCATED ");
+                                        				printf("%s", arr[index].s);
+                                        				printf(" ");
+                                        				printf("%d", address);
+                                        				//arr[index].address = memTemp;
+                                        				memTemp = c + address;
+                                        				printf("\n");
+                                        				temp = 0;//reset
+                                        				//str[0] = '\0';//reset
+                                        				arr[index].gap = 0;
+                                        				//going on the top
+                                        				int count = 0;
+                                        				for (int j = 0; j <index; j++)
+                                        				{
+                                                				if (arr[j].position != 11000)
+                                                				{
+                                                        				count++;
+                                                				}
+                                        				}
+
+                                       	 				arr[index].position = count;
+                                        				arr[index].positionHolder = count;
+                                        				index++;
+                                        				//printf("increment2\n");
+									skip = 1;
+                                        				break;
+								}
 							}
 						}
+						if (skip == 1)
+						{
+							break;
+						}
+						//printf("smallestHoleIndex: %d\n", smallestHoleIndex);
+						//printf("hole: %d\n", hole);
 						//by now we have the smallest hole and its index
 						//place the process in this gap theoretically
 
