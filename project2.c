@@ -369,18 +369,18 @@ int main(int argc, char *argv[])
 
 						for (int i = 0; i < index; i++)
 						{
-							printf("position: %d  %d\n", arr[i].position, arr[i].addressHolder);
+							//printf("position: %d  %d\n", arr[i].position, arr[i].addressHolder);
 						}
 						//printf("hole: %d\n", hole);
 						if (hole > 0)
 						{
 							arr[smallestHoleIndex].position = arr[smallestHoleIndex].position + 1;
-							printf("new position: %d\n", arr[smallestHoleIndex].position);
+							//printf("new position: %d\n", arr[smallestHoleIndex].position);
 							for (int g = arr[smallestHoleIndex].position; g < index; g++)
                                                 	{
                                                         	if (arr[smallestHoleIndex].position <= arr[g].position)// && arr[g].gap == 0)
                                                         	{
-                                                                	printf("changing %d at %d\n", arr[g].position, g);
+                                                                	//printf("changing %d at %d\n", arr[g].position, g);
                                                                 	arr[g].position = arr[g].position + 1;
                                                         	}
                                                 	}
@@ -504,7 +504,7 @@ int main(int argc, char *argv[])
                         		index++;
 					for (int i = 0; i < index; i++)
                                         {
-                                                 printf("position: %d  %d\n", arr[i].position, arr[i].changed);
+                                                 //printf("position: %d  %d\n", arr[i].position, arr[i].changed);
                                         }
 					//printf("increment2\n");
 					break;
