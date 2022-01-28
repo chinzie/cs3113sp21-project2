@@ -3,8 +3,6 @@
 
 This project was divided up into 4 sections: BESTFIT, FIRSTFIT, WORSTFIT, NEXTFIT
 
-I first made BESTFIT and after I was done I copy and pasted 95% of the code for the other sections.
-
 The code is relatively the same for all sections except for where it decides to put new objects in the memory.
 So each section has its own logic for "gaps" in the memory to decide where to put it based on its task.
 
