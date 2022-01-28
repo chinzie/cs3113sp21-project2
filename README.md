@@ -19,5 +19,3 @@ For listing out assigned objects, like the gaps, it prints them out in order of 
 
 Lastly, this was probably not the most efficient form of accomplishing this but it is what I thought would work for me.
 There is a bug for WORSTFIT AND FIRSTFIT where everything is correct except for when it prints out the available spaces, it is wrong on the amounts.
-
-If I had more time I feel as if I could solve this bug but I spent over a week just on BESTFIT to work and all the bugs that came along with it but I am happy with what I have produced.
